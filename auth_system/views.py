@@ -56,7 +56,7 @@ def logout_view(request):
     logout(request)
     return redirect('home')
 
-def add_user(request):
+def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
