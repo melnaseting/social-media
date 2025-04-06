@@ -57,42 +57,19 @@ def logout_view(request):
     return redirect('home')
 
 def register(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UserForm(request.POST)
         if form.is_valid():
-            try:
-                user = form.save()
-                request.session['username'] = user.username
-
-                subject = user.username
-                message = f'Вітаємо, {subject}. Ви успішно зареєстровані! Ми раді вас бачити'
-                from_email = core.settings.EMAIL_HOST_USER
-                to_email = user.email
-                send_mail(
-                    subject,
-                    message,
-                    from_email, 
-                    [to_email],
-                    fail_silently=False
-                )
-                if user.email in core.settings.ADMIN_EMAIL:
-                    group = Group.objects.get(name="Адміністратор")
-                    user.groups.add(group)
-                else:
-                    group = Group.objects.get(name="Користувач")
-                    user.groups.add(group)
-
-                return redirect('home')
-            except IntegrityError:
-                messages.error(request, 'Користувач з такою поштою вже зареєстрований.')
-        else:
-            print(form.errors)
-            messages.error(request, 'Виникла помилка. Перевірте введені дані.')
+            user = form.save()
+            login(request, user)
+            return redirect("home")
     else:
         form = UserForm()
-    
-    return render(request, 'auth_system/create_user.html', {'form': form})
-
+    return render(
+        request, 
+        template_name='auth_system/register.html',
+        context= {"form": form}
+    )
 
 def request_login(request):
     if request.method == 'POST':

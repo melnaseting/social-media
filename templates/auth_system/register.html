@@ -1,12 +1,12 @@
-{% extends "home/base.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 Реєстрація
 {% endblock %}
 
 {% block content %}
-<center>
-    <div class="card-my">
+<div> 
+    <div class="card">
         <h3>Заповніть форму для продовження</h3>
         <form method="post">
             {% csrf_token %}
@@ -44,7 +44,7 @@
             </ul>
         {% endif %}
     </div>
-</center>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
