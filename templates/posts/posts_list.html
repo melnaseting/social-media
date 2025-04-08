@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Головна
+{% endblock title %}
+
+{% block content %}
+    {% for post in posts %}
+        <div class="post">
+            <h3> {{ post.created_by }} </h3>
+                {% if post.photo %}
+                    <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
+                {% endif %}
+                <p><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+                <form method="post" action="{% url 'posts:like_post' post.id %}">
+                    {% csrf_token %}
+                    <button class="like_button" type="submit">
+                        {% if post.id in liked_posts %}
+                            ❤️
+                        {% else %}
+                            🤍
+                        {% endif %}
+                    </button>
+                    {{ post.like_count }} лайков
+                </form>
+                <hr width="500px">
+            </div>
+            
+    {% endfor %}
+{% endblock content %}

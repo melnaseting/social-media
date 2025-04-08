@@ -1,18 +1,17 @@
 body{
-    background: #000;
+    background: #362b48;
 }
 .con{
-    background-color: rgb(255, 220, 230);
+    background-color: #ffe9ff;
     display: flex;
 }
 .card{
-    background-color: #ffffff;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
     margin: 20px auto;
     text-align: left;
-    max-width: 500px;
+    color:#4d3a4d;
 }
 .content{
     width: 100%;
@@ -23,7 +22,6 @@ body{
     align-items: center;
 }
 .auth{
-    
     margin-left: 45%;
 }
 .btn-my {
@@ -47,7 +45,7 @@ body{
     padding-bottom: 280px;
     width: 250px;
     display: block;
-    background-color: #7535a9;
+    background-color: #3b35a9;
     display: flex;
     flex-direction: column;
     align-items:center;
@@ -78,4 +76,25 @@ body{
     font-size: 70px;
     font-style: normal;
     margin-bottom: 100px;
+}
+.post{
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    margin: 20px auto;
+    text-align: left;
+    color:#4d3a4d;
+    width: 550px;
+    margin-left: 40%;
+}
+.post_image{
+    border-radius: 15px;
+    width: 500px;
+    height: 700px;
+}
+.like_button{
+    text-align: left;
+    border: none;
+    background: transparent;
+    font-size: 25px;
 }
