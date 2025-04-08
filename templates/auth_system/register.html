@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<div> 
-    <div class="card">
+    <div class="card auth">
         <h3>Заповніть форму для продовження</h3>
         <form method="post">
             {% csrf_token %}
@@ -44,8 +43,6 @@
             </ul>
         {% endif %}
     </div>
-</div>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

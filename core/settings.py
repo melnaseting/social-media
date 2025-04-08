@@ -118,7 +118,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),  # Указывает путь к общей папке static
 ]
-
+print(STATICFILES_DIRS)
 LOGIN_URL = '/users/login'
 
 CSRF_TRUSTED_ORIGINS=[
