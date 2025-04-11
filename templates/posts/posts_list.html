@@ -11,19 +11,43 @@
                 {% if post.photo %}
                     <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
                 {% endif %}
-                <p><b>{{ post.created_by }}: </b>{{ post.description }}</p>
                 <form method="post" action="{% url 'posts:like_post' post.id %}">
                     {% csrf_token %}
                     <button class="like_button" type="submit">
                         {% if post.id in liked_posts %}
-                            ❤️
+                        <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="1.6">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                            <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ff0000"></path> </g>
+                        </svg>
                         {% else %}
-                            🤍
+                        <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.6">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                            <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ffffff"></path> </g>
+                        </svg>
                         {% endif %}
                     </button>
-                    {{ post.like_count }} лайков
+                    {{ post.like_count }} вподобайок
                 </form>
-                <hr width="500px">
+                <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+                <details class="comments">
+                    <summary>Коментарі</summary>
+                    <div class="comments_div">
+                        {% for comment in comments %}
+                            {% if comment.post == post %}
+                                <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
+                            {% csrf_token %}
+                            {{ form.text }} 
+                            <button type="submit" class="btn-my">Надіслати</button> 
+                        </form>
+                    </div>
+                </details>
+                
+                <hr width="600px">
             </div>
             
     {% endfor %}
