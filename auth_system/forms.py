@@ -1,6 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.forms import Form, EmailField, EmailInput, CharField, PasswordInput, TextInput, ChoiceField, ModelChoiceField, Select
+from . import models
 
 class UserForm(UserCreationForm):
     password1 = CharField(
@@ -23,7 +24,7 @@ class UserForm(UserCreationForm):
     )
 
     class Meta:
-        model = User
+        model =  models.Client
         fields = ["username", "email", "password1", "password2"]
         widgets = {
             "username": TextInput(attrs={
@@ -54,15 +55,8 @@ class EmailPasswordForm(Form):
         label="Пароль"
     )
 
-class ChooseUserForm(Form):
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        if user:
-            self.fields['user'].queryset = User.objects.exclude(id=user.id)
-
     user = ModelChoiceField(
-        queryset=User.objects.all(), 
+        queryset= models.Client.objects.all(), 
         label="Оберіть користувача",
         widget=Select(attrs={'class': 'form-select'})
     )

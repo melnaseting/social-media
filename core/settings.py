@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = "auth_system.Client"
 
 # Application definition
 
@@ -121,7 +122,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),  # Указывает путь к общей папке static
 ]
 print(STATICFILES_DIRS)
-LOGIN_URL = '/users/login'
+LOGIN_URL = '/login/'
 
 CSRF_TRUSTED_ORIGINS=[
     'https://f9b9-95-158-48-175.ngrok-free.app'

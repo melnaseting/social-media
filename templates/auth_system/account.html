@@ -15,88 +15,20 @@
     {% endfor %}
     </ul>
     {% endif %}
-    <h1>Профіль користувача: {{ account_detail.username }}</h1>
-    {% if account_detail.groups.first.name == 'Адміністратор' %}
-        <h5 style="color: red;">Ваша роль - {{ account_detail.groups.first.name }}</h5>
-    {% elif account_detail.groups.first.name == 'Модератор' %}
-        <h5 style="color: blue;">Ваша роль - {{ account_detail.groups.first.name }}</h5>
-    {% elif account_detail.groups.first.name == 'Користувач' %}
-        <h5 style="color: green;">Ваша роль - {{ account_detail.groups.first.name }}</h5>
-    {% endif %}
-    <p>Email: {{ account_detail.email }}</p>
-    <p>Password: 
-        <a class="btn" href="{% url 'auth_system:edit_account' account_detail.pk %}" style="color: black;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z"></path>
-            </svg>
-        </a>
-    </p><hr>
-    <details>
-        <summary>Змінити роль користувача</summary>
-        <div class="card-user-group">
-            <p>Змінити роль користувача</p>
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group-my">
-                    <label id="id_user">Користувач</label>
-                    {{ form.user }}
-                </div>
-                <div class="form-group-my">
-                    <label id="id_group">Роль</label>
-                    {{ form.group }}
-                </div>
-                <center><button type="submit" class="btn-my m-3">Підтвердити</button></center>
-            </form>
-        </div>
-        <div class="card-user-group" id="selected-container" style="display: none;">
-            <h5 id="selected-info"></h5>
-        </div>
-    </details>  
     
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const userSelect = document.querySelector("select[name='user']");
-            const groupSelect = document.querySelector("select[name='group']");
-            const selectedInfo = document.querySelector("#selected-info");
-            const selectedContainer = document.querySelector("#selected-container");
-    
-            if (!userSelect || !groupSelect || !selectedInfo || !selectedContainer) {
-                console.error("Сталась помилка");
-                return;
-            }
-    
-            function updateSelection() {
-                const user = userSelect.value.trim() ? userSelect.options[userSelect.selectedIndex].text : "";
-                const group = groupSelect.value.trim() ? groupSelect.options[groupSelect.selectedIndex].text : "";
-    
-                if (user && group) {
-                    const userGroupText = `${user} -> <span id="group-name">${group}</span>`;
-                    selectedInfo.innerHTML = userGroupText;
-                    const groupName = document.querySelector("#group-name");
-    
-                    if (group === "Адміністратор") {
-                        groupName.style.color = "red";
-                    } else if (group === "Користувач") {
-                        groupName.style.color = "green";
-                    } else if (group === "Модератор") {
-                        groupName.style.color = "blue";
-                    } else {
-                        groupName.style.color = "";
-                    }
-    
-                    selectedContainer.style.display = "block";
-                } else {
-                    selectedContainer.style.display = "none";
-                }
-            }
-    
-            userSelect.addEventListener("change", updateSelection);
-            groupSelect.addEventListener("change", updateSelection);
-            updateSelection();
-        });
-    </script>
-    
-    
+    <h1> {{ client.username }} підписників - {{ client.get_subscribers_count }}</h1>
+    <img src="{{ client.photo.url }}" alt="" width="500px" height="500px">
 
+    <form method="post" action="{% url 'auth_system:subscribe' client.id %}">
+        {% csrf_token %}
+        <button class="subscribe_button" type="submit">
+            {% if user.id in subscribers %}
+            <span>Відписатись</span>
+            {% else %}
+            <span>Підписатись</span>
+            {% endif %}
+        </button>
+        {{ client.get_subscriptions_count }} підписок
+    </form>
 {% endblock content %}
 
