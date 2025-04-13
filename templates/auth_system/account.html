@@ -18,7 +18,6 @@
     
     <h1> {{ client.username }} підписників - {{ client.get_subscribers_count }}</h1>
     <img src="{{ client.photo.url }}" alt="" width="500px" height="500px">
-
     <form method="post" action="{% url 'auth_system:subscribe' client.id %}">
         {% csrf_token %}
         <button class="subscribe_button" type="submit">

@@ -7,7 +7,7 @@
 {% block content %}
     {% for post in posts %}
         <div class="post">
-            <h3> {{ post.created_by }} </h3>
+            <a class="profile_link" href="{% url 'auth_system:account' user.id %}"> {{ post.created_by }} </a>
                 {% if post.photo %}
                     <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
                 {% endif %}

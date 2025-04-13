@@ -89,6 +89,12 @@ body{
     width: 550px;
     margin-left: 7%;
 }
+.profile_link{
+    text-decoration: none;
+    font-size: 35px;
+    color: #4d3a4d;
+    font-weight: 1000;
+}
 .post_image{
     border-radius: 10px;
     width: 600px ;

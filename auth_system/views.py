@@ -32,7 +32,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("home")
+            return redirect("posts:posts")
     else:
         form = UserForm()
     return render(
@@ -66,7 +66,7 @@ class ClientProfileView(DetailView):
 
         return context
 
-class FolowUser(CreateView):
+class FolowUser(LoginRequiredMixin,CreateView):
     def post(self, request,client_id, *args, **kwargs):
         client = get_object_or_404(models.Client, id=client_id)
         if client != self.request.user:
