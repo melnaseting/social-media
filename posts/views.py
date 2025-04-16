@@ -1,10 +1,12 @@
 from django.views.generic import ListView, View, CreateView
+from django.urls import resolve
 from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.base import ContentFile
 from . import models, forms
 from django.contrib import messages
 import uuid
+from django.utils.http import url_has_allowed_host_and_scheme
 import base64
 
 # Create your views here.
@@ -32,7 +34,15 @@ class ToggleLikeView(LoginRequiredMixin, View):
         like, created = models.Like.objects.get_or_create(user=request.user, post=post)
         if not created:
             like.delete()  
-        return redirect('posts:posts')
+        
+        next_url = request.POST.get('next') or request.META.get('HTTP_REFERER', '/')
+
+        if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+            next_url = '/'
+
+        return redirect(next_url)
+       
+
     
 class CreatePostView(LoginRequiredMixin, CreateView):
     form_class = forms.CreatePostForm 
@@ -50,7 +60,6 @@ class CreatePostView(LoginRequiredMixin, CreateView):
             messages.success(request, 'Пост додано, перегляньте сторінку.')
             return redirect('posts:posts')
 
-        # если форма невалидна — возвращаем страницу с формой и ошибками
         return render(request, self.template_name, {'form': form})
 
 class CreateCommentView(LoginRequiredMixin,CreateView):
@@ -60,4 +69,11 @@ class CreateCommentView(LoginRequiredMixin,CreateView):
             text = request.POST['text'],
             created_by = request.user,
             post = models.Post.objects.get(pk = kwargs['pk']))           
-        return redirect('posts:posts')
+        
+        next_url = request.POST.get('next') or request.META.get('HTTP_REFERER', '/')
+
+        if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={request.get_host()}):
+            next_url = '/'
+
+        return redirect(next_url)       
+        

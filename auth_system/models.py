@@ -1,17 +1,20 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from posts.models import Post
 
 class Client(AbstractUser):
     photo = models.ImageField(
         upload_to='media/',
+        default='media\profile_photo.png'
+    )
+    description = models.CharField(
         null=True,
         blank=True,
-        default='static\profile_photo.png'
+        max_length=150
     )
-    description = models.TextField(
-        null=True,
-        blank=True
-    )
+
+    def get_posts_count(self):
+        return Post.objects.filter(created_by = self).count()
 
     def get_subscribers_count(self):
         return Subscription.objects.filter(subscribed_to=self).count()

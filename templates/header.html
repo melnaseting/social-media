@@ -52,9 +52,13 @@
     {% endif %}
     <span class="nav-link">Створити</span>
   </a> 
-  <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:account' user.id %}">
-    <!--<img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVR4nO3TPWpCQRSA0YelCroCbXQHppFsI6WxFHehjYJYxHQRspqkDWlioYWCC7C0PfJAi0D0/cwrUvjBFJfLnGJgoujevUJDCQ94Qieei4Lb+Pa7L7RC4Sp2/m6LSgg+dLtBCL5MwN9C8HkCPgvBHxPwbm48Dq9X4JeoiPCMT+zxgV7070MNfUzxjsl5roWgFSxwvPLmx/O+nBVuYiNdazTSwnWsZOsnvpcGH2WEL43T4DMccpz8vzVPJ6XlI/r7P4mMAAAAAElFTkSuQmCC" alt="person-male--v3">-->
-    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nO2UTyuEURTGX1GjxLDyZzNbyZ6dPYmywDeg+B4IC8JaVixFFmND4QsQxYKNpYWNcp+fR3eaUlPTzLzv2M2zOZ17zv2d0z2nmyQttfQvst3XbGAnsIn08QOOFtiwncsKbgMukG5sj9nusj2OdAucx3h6eAgzSK+2uyuK9iC9OYTp1HBgF9iqEtsGdrLA94G1KrF1YC813NIi0mPl8EpDlp4szaeH2x1Id8Cp7UL5rACclYfcnhoeZbsXOEL6RvosWTi0nU+aJdt528NxU5oGjbI9ZHvC0kLJ2oNJVjmEKeAS6QvpHigiPZR8KDqEycahdg44QHq3tFL5FNG3tBrjcR0b+gqAE6Qr2/01mhhAugaO6+taWkZ6rncbYh7Si6Wl2skhzNkerauTvwIjDmG2kTuZ9QvvskUDfgTi7gAAAABJRU5ErkJggg==" alt="person-male--v2">
+  <a class="nav_item" style="text-decoration: none;" {% if user.is_authenticated %} href="{% url 'auth_system:account' user.id %}"{% endif %}>
+    {% if '/account/' in request.path %}
+    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVR4nO3TPWpCQRSA0YelCroCbXQHppFsI6WxFHehjYJYxHQRspqkDWlioYWCC7C0PfJAi0D0/cwrUvjBFJfLnGJgoujevUJDCQ94Qieei4Lb+Pa7L7RC4Sp2/m6LSgg+dLtBCL5MwN9C8HkCPgvBHxPwbm48Dq9X4JeoiPCMT+zxgV7070MNfUzxjsl5roWgFSxwvPLmx/O+nBVuYiNdazTSwnWsZOsnvpcGH2WEL43T4DMccpz8vzVPJ6XlI/r7P4mMAAAAAElFTkSuQmCC" alt="person-male--v3">
+    {% else %}
+    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nO2UTyuEURTGX1GjxLDyZzNbyZ6dPYmywDeg+B4IC8JaVixFFmND4QsQxYKNpYWNcp+fR3eaUlPTzLzv2M2zOZ17zv2d0z2nmyQttfQvst3XbGAnsIn08QOOFtiwncsKbgMukG5sj9nusj2OdAucx3h6eAgzSK+2uyuK9iC9OYTp1HBgF9iqEtsGdrLA94G1KrF1YC813NIi0mPl8EpDlp4szaeH2x1Id8Cp7UL5rACclYfcnhoeZbsXOEL6RvosWTi0nU+aJdt528NxU5oGjbI9ZHvC0kLJ2oNJVjmEKeAS6QvpHigiPZR8KDqEycahdg44QHq3tFL5FNG3tBrjcR0b+gqAE6Qr2/01mhhAugaO6+taWkZ6rncbYh7Si6Wl2skhzNkerauTvwIjDmG2kTuZ9QvvskUDfgTi7gAAAABJRU5ErkJggg==" alt="person-male--v2">      
+    {% endif %}
+    
     <span class="nav-link">Профіль</span>
   </a> 
   </nav>

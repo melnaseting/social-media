@@ -1,67 +1,44 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
-from django.forms import Form, EmailField, EmailInput, CharField, PasswordInput, TextInput, ChoiceField, ModelChoiceField, Select
+from django import forms
 from . import models
 
-class UserForm(UserCreationForm):
-    password1 = CharField(
-        label="Пароль",
-        widget=PasswordInput(attrs={
-            'class': 'form-control email',
-            'placeholder': 'Придумайте пароль',
-            'id': 'id_password1',
-            'data-toggle': 'password',
-        })
-    )
-    password2 = CharField(
-        label="Повторіть пароль",
-        widget=PasswordInput(attrs={
-            'class': 'form-control email',
-            'placeholder': 'Повторіть пароль',
-            'id': 'id_password1',
-            'data-toggle': 'password',
-        })
-    )
-
+class ClientForm(forms.ModelForm):
     class Meta:
-        model =  models.Client
-        fields = ["username", "email", "password1", "password2"]
+        model = models.Client
+        fields = ['email', 'username','description','photo']
         widgets = {
-            "username": TextInput(attrs={
-                'class': 'form-control email',
-                'placeholder': 'Імя користувача',
-            }),
-            "email": EmailInput(attrs={
-                'class': 'form-control email',
-                'placeholder': 'Ваша пошта',
-            }),
+            'email' : forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Пошта'}),
+            'username' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ім'я"}),
+            'description' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Опис'}),
+            'photo' : forms.FileInput(attrs={'class': 'form-control',"type":"file","accept":"image/png, image/jpeg"})
         }
 
-class EmailPasswordForm(Form):
-    email = EmailField(
-        label="Електронна пошта", 
-        widget=EmailInput(attrs={
-            'class': 'form-control email',
-            'placeholder': 'Ваша пошта',
+class ClientRegistrationForm(UserCreationForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Пароль'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Повторіть пароль'}))
+    class Meta:
+        model = models.Client
+        fields = ['username', 'email', 'password', 'password2']
+        widgets = {
+            'email' : forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Пошта'}),
+            'username' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ім'я"}),
+            }
+        
+class ClientLoginForm(forms.Form):
+    username = forms.CharField(
+        label="Нікнейм", 
+        widget=forms.TextInput(attrs={
+             'class': 'form-control email',
+             'placeholder': 'Нікнейм',
         })
     )
-    password = CharField(
-        widget=PasswordInput(attrs={
-            'class': 'form-control email',
-            'placeholder': 'Пароль',
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+             'class': 'form-control email',
+             'placeholder': 'Пароль',
             'id': 'id_password',
             'data-target': 'id_password'
         }),
         label="Пароль"
-    )
-
-    user = ModelChoiceField(
-        queryset= models.Client.objects.all(), 
-        label="Оберіть користувача",
-        widget=Select(attrs={'class': 'form-select'})
-    )
-    group = ModelChoiceField(
-        queryset=Group.objects.all(), 
-        label="Оберіть групу",
-        widget=Select(attrs={'class': 'form-select'})
     )
