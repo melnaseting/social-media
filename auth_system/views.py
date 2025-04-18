@@ -6,7 +6,7 @@ from . import models
 from posts.forms import CreateCommentForm
 from posts.models import Comment, Post, Like
 from .forms import ClientForm, ClientRegistrationForm, ClientLoginForm
-from django.views.generic import UpdateView, DetailView, CreateView, View
+from django.views.generic import UpdateView, DetailView, CreateView, View, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 
@@ -67,6 +67,10 @@ class ClientProfileView(DetailView):
         context = super().get_context_data(**kwargs)
         client = self.get_object()
 
+        unread_messages = models.Message.objects.filter(message_to = self.request.user,read = False)
+        if unread_messages:
+            messages.info(self.request, 'У вас нове повідомлення, перегляньте у розділі "Повідомлення"')
+
         if self.request.user.is_authenticated and self.request.user != client:
             is_subscribed = models.Subscription.objects.filter(
                 subscriber=self.request.user,
@@ -114,9 +118,30 @@ class FolowUser(LoginRequiredMixin,CreateView):
             )
             if not created:
                 subcription.delete()  
+            else:
+                message = models.Message.objects.create(
+                    text = f'{subcription.subscriber} почав слідкувати за вами',
+                    message_to = subcription.subscribed_to,
+                    message_from = subcription.subscriber,
+                    category = 'folowed_user'
+                )
         return redirect('auth_system:account', client.id) 
 
-def unfollow_user(request, user_id):
-    to_unfollow = get_object_or_404(models.Client, id=user_id)
-    models.Subscription.objects.filter(subscriber=request.user, subscribed_to=to_unfollow).delete()
-    return redirect('user_profile', user_id=to_unfollow.id)
+class MessageListView(LoginRequiredMixin, ListView):
+    model = models.Message
+    template_name = 'auth_system/messages_list.html'
+    context_object_name = 'messages'
+
+    def get_queryset(self):
+        client = self.request.user
+        queryset =  models.Message.objects.filter(message_to=client)
+        return queryset.order_by('-created_time')
+
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+
+        # Помічаємо як прочитані
+        client = self.request.user
+        models.Message.objects.filter(message_to=client, read=False).update(read=True)
+
+        return response

@@ -13,6 +13,7 @@ body{
     color:#4d3a4d;
 }
 .content{
+    color: #4d3a4d;
     width: 100%;
     min-height: 100vh;
     display: flex;
@@ -80,6 +81,23 @@ body{
     background: rgba(142, 142, 142, 0.459);
     transition: 0.5s;
 }
+.nav_item div{
+    display: flex;
+}
+.nav-link{
+    margin-left: 10%;
+}
+.nav-link:first-child{
+    margin: -10%;
+}
+.unread_message_marker{
+    position: absolute;
+    margin-left: 15px;
+    background-color: rgb(255, 80, 80);
+    height: 7.5px;
+    width: 7.5px;
+    border-radius: 50%;
+}
 .nav_title{
     display: flex;
     width: 100%;
@@ -93,9 +111,6 @@ body{
     font-style: normal;
     margin-bottom: 100px;
 }
-.nav_icon{
-    margin-right: 10%;
-}
 .post{
     display: flex;
     flex-direction: column;
@@ -106,10 +121,22 @@ body{
     margin-left: 7%;
 }
 .profile_link{
+    align-content: center;
+    width: 100%;
+    display: flex;
     text-decoration: none;
-    font-size: 35px;
+    font-size: 25px;
+    margin: 10px;
     color: #4d3a4d;
     font-weight: 1000;
+}
+.profile_link img{
+    margin-right: 10px;
+    border: #4d3a4d 2px solid;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 100%;
 }
 .post_image{
     border-radius: 10px;
@@ -146,6 +173,10 @@ body{
 }
 .comments_div{
     margin-top: 10px;
+    max-height: 250px; 
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 .comment_form{
     display: flex;
@@ -164,6 +195,7 @@ body{
     justify-content: space-between;
 }
 .profile_photo{
+    object-fit: cover;
     border: 5px solid #4d3a4d ;
     margin-right: 20%;
     width: 200px;
@@ -200,6 +232,7 @@ body{
     padding-top: 1%;
 }
 .profile_post_image{
+    object-fit: cover;    
     width: 270px;
     height: 270px;
     border-radius: 20px;
@@ -225,13 +258,54 @@ body{
     display: flex;
     justify-content: space-between;
 }
+.post_detail_message{
+    background-color: #ffffff;
+    margin-left: 12.5%;
+    padding: 30px;
+    border-radius: 20px;
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+}
 .close {
+    margin-left: 10%;
     color: #aaa;
-    float: right;
     font-size: 28px;
     font-weight: bold;
     cursor: pointer;
 }
 .close:hover {
     color: black;
+}
+.delete{
+    margin-top: 10px;
+    margin-right: 10px;
+    color: lightcoral
+}
+.delete:hover{
+    color: red;
+}
+.account_img_preview{
+    object-fit: cover;
+    border-radius: 10px;
+    margin: 0 auto;
+    width: 275px;
+    height: 275px;
+}
+.edit_post_description{
+    max-height: 100px;
+    min-height: 100px;
+}
+.message_li{
+    list-style-type: none;
+    border-bottom: 1px solid #4d3a4d;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: transparent;
+    font-size: 25px;
+}
+.message_li:hover{
+    background: rgba(186, 203, 255, 0.41);
+    transition: 0.5s;
 }

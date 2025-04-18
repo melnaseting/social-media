@@ -33,9 +33,17 @@
     </svg>
     <span class="nav-link">Пошук</span>
   </a>
-  <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}"> 
-    <!--<img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA40lEQVR4nNXUQUrDQBQG4BFq0S4qutOtVHsZ8QZewVtY9TSidCG4st26KoIewroRNwqfRKY0hiS0yWz8YSDMhI/kvZkJ4d8FmxhigE7F+lF8p1MHbeMK75Z5wwV6cYzi3CJzXGKrDJuqziMmNeuTP2j8srYZ5WuS/82mmf/WFMfSZRBiN1PlMMTufSfAvrLmLur4kAC8z3f5NAF4UtyL4xbYXdlJ2cNrA+wFu1XH7wDPa2Az7NfdDRm6g9sVsBv0a7ECfIaPEugT59hYGQtLNLuinnJY9jxcGyqgXVzH0W2FNckPOQbHQmXccxYAAAAASUVORK5CYII=" alt="like--v1">-->
-    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABJUlEQVR4nNXTzyqEURjH8cFg/EmxYi8zaVyDbKWUC5DdNKLIBbDzZ+cCpBQSZSVZsEaYS/rocGZ6Ry9m3rHxq6fOeX7P+Z7nPec9udy/E3pRwiTyKX4+eqU0vyEMYB81nOICb9hGf4ydmAveWazdQyEN9oAKuhP5HqzjJsZayCX8blRx3wSNnVWadmnecDXED34Vu8kzqyU7a1c+Ow2MfJgUw3lkhdWFc0yFwTQucx0KV+Hmw2AYL38AfMVQfXL30W52WBG3ycQCjjoAHmP+a/IaixlgS+H80oyx+Apm24DNxTWj3xVMhAvCcguwlVg7/lvhSPz8Ewym+AUcxqc42s6fv4UnlBP5GTxjE10twXLN4DIesREjjBsbZBL6cBCjryNYFr0DrGh5PiHRTMkAAAAASUVORK5CYII=" alt="like--v1">
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:messages' %}"> 
+    <div>
+      {% if request.path == '/messages/' %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA40lEQVR4nNXUQUrDQBQG4BFq0S4qutOtVHsZ8QZewVtY9TSidCG4st26KoIewroRNwqfRKY0hiS0yWz8YSDMhI/kvZkJ4d8FmxhigE7F+lF8p1MHbeMK75Z5wwV6cYzi3CJzXGKrDJuqziMmNeuTP2j8srYZ5WuS/82mmf/WFMfSZRBiN1PlMMTufSfAvrLmLur4kAC8z3f5NAF4UtyL4xbYXdlJ2cNrA+wFu1XH7wDPa2Az7NfdDRm6g9sVsBv0a7ECfIaPEugT59hYGQtLNLuinnJY9jxcGyqgXVzH0W2FNckPOQbHQmXccxYAAAAASUVORK5CYII=" alt="like--v1">
+    {% else %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABJUlEQVR4nNXTzyqEURjH8cFg/EmxYi8zaVyDbKWUC5DdNKLIBbDzZ+cCpBQSZSVZsEaYS/rocGZ6Ry9m3rHxq6fOeX7P+Z7nPec9udy/E3pRwiTyKX4+eqU0vyEMYB81nOICb9hGf4ydmAveWazdQyEN9oAKuhP5HqzjJsZayCX8blRx3wSNnVWadmnecDXED34Vu8kzqyU7a1c+Ow2MfJgUw3lkhdWFc0yFwTQucx0KV+Hmw2AYL38AfMVQfXL30W52WBG3ycQCjjoAHmP+a/IaixlgS+H80oyx+Apm24DNxTWj3xVMhAvCcguwlVg7/lvhSPz8Ewym+AUcxqc42s6fv4UnlBP5GTxjE10twXLN4DIesREjjBsbZBL6cBCjryNYFr0DrGh5PiHRTMkAAAAASUVORK5CYII=" alt="like--v1">
+    {% endif %}
+    {% if user.has_unread_messages %}
+      <div class="unread_message_marker"></div>
+    {% endif %}
+    </div>
     <span class="nav-link">Повідомлення</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:create_post' %}"> 

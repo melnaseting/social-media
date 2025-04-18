@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Деталі посту
+{% endblock title %}
+
+{% block content %}
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+<div class="post_detail_message">
+    <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
+    <div class="post_detail_right">
+        <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> {{ post.created_by }} </a>
+        {% if user == post.created_by %}
+            <div style="float: right;display: flex;">
+                <a href="{% url 'posts:delete_post' post.pk %}" class="delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                    </svg>
+                </a>               
+            </div>
+        {% endif %} 
+        <form method="post" action="{% url 'posts:like_post' post.id %}">
+            {% csrf_token %}
+            <button class="like_button" type="submit">
+                {% if post.id in liked_posts %}
+                <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="1.6">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                    <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ff0000"></path> </g>
+                </svg>
+                {% else %}
+                <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.6">
+                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                    <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ffffff"></path> </g>
+                </svg>
+                {% endif %}
+            </button>
+            {{ post.like_count }} вподобайок
+        </form>
+        {% if post.description %}
+            <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+        {% endif %}
+        <details class="comments">
+            <summary>Коментарі {{ post.comment_count }}</summary>
+            <div class="comments_div">
+                {% for comment in comments %}
+                    {% if comment.post == post %}
+                        <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
+                {% csrf_token %}
+                {{ form.text }} 
+                <button type="submit" class="btn-my">Надіслати</button> 
+            </form>
+        </details>   
+    </div>        
+</div>
+{% endblock content %}

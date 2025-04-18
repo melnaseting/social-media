@@ -4,7 +4,7 @@ from .models import Post, Comment
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     readonly_fields = []  # больше нет поля likes, ничего тут не нужно
-    list_display = ['created_by', 'description', 'like_count']
+    list_display = ['id','created_by', 'description', 'like_count']
 
     def like_count(self, obj):
         return obj.like_set.count()

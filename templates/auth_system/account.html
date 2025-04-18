@@ -55,7 +55,18 @@
                 <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
                 <div class="post_detail_right">
                     <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> {{ post.created_by }} </a>
-                    <span class="close">&times;</span>
+                    <div style="float: right;display: flex;">
+                        {% if user == post.created_by %}
+                            <a href="{% url 'posts:delete_post' post.pk %}" class="delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                </svg>
+                            </a>
+                        {% endif %}
+                        <span class="close">&times;</span>
+                        
+                    </div>
                     <form method="post" action="{% url 'posts:like_post' post.id %}">
                         {% csrf_token %}
                         <button class="like_button" type="submit">
@@ -75,7 +86,9 @@
                         </button>
                         {{ post.like_count }} вподобайок
                     </form>
-                    <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+                    {% if post.description %}
+                        <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+                    {% endif %}
                     <details class="comments">
                         <summary>Коментарі</summary>
                         <div class="comments_div">
@@ -84,12 +97,12 @@
                                     <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
                                 {% endif %}
                             {% endfor %}
-                            <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
-                                {% csrf_token %}
-                                {{ form.text }} 
-                                <button type="submit" class="btn-my">Надіслати</button> 
-                            </form>
                         </div>
+                        <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
+                            {% csrf_token %}
+                            {{ form.text }} 
+                            <button type="submit" class="btn-my">Надіслати</button> 
+                        </form>
                     </details>   
                 </div>        
             </div>

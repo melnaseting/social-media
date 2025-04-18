@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Видалення
+{% endblock title %}
+
+{% block content %}
+<div class="card">
+    <h3>Видалення Посту</h3>
+    <p>Ви впевнені, що хочете видалити пост?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="return_url" value="{{ return_url }}">
+        <button type="submit" class="btn-my">Так, видалити</button>
+        <a href="{% url 'auth_system:account' object.created_by.id %}" class="a-my-primary">Ні, назад до профілю</a>
+    </form>
+</div>
+{% endblock content %}

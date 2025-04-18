@@ -25,8 +25,8 @@
                 <label class="form-label" for="id_password2">Повторіть пароль:</label>
                 {{ form.password2 }}
             </div>
-            <a href="{% url 'auth_system:login' %}" class="a-my-primary">Увійти</a>
             <button type="submit" class="btn-my">Реєстрація</button>
+            <a href="{% url 'auth_system:login' %}" class="a-my-primary">Увійти</a>
         </form>
         {% if form.errors %}
             <ul class="error-list">

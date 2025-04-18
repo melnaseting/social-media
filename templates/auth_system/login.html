@@ -18,8 +18,8 @@
                     <i class="fas fa-eye"></i>
                 </span>
             </div>
-            <a href="{% url 'auth_system:register' %}" class="a-my-primary">Зареєструватись</a>
             <button type="submit" class="btn-my m-3">Увійти</button>
+            <a href="{% url 'auth_system:register' %}" class="a-my-primary">Зареєструватись</a>
         </form>
         {% if form.errors %}
             <ul class="error-list">

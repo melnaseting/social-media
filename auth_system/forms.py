@@ -10,7 +10,7 @@ class ClientForm(forms.ModelForm):
         widgets = {
             'email' : forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Пошта'}),
             'username' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ім'я"}),
-            'description' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Опис'}),
+            'description' : forms.Textarea(attrs={'class': 'form-control edit_post_description', 'placeholder': 'Опис','maxlength':150}),
             'photo' : forms.FileInput(attrs={'class': 'form-control',"type":"file","accept":"image/png, image/jpeg"})
         }
 
