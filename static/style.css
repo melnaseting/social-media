@@ -130,7 +130,7 @@ body{
     color: #4d3a4d;
     font-weight: 1000;
 }
-.profile_link img{
+.profile_photo_small{
     margin-right: 10px;
     border: #4d3a4d 2px solid;
     width: 50px;
@@ -308,4 +308,27 @@ body{
 .message_li:hover{
     background: rgba(186, 203, 255, 0.41);
     transition: 0.5s;
+}
+.client_list_container{
+    position: fixed;
+    top: 100px;
+    width: 50%;
+    margin-left: 15%;
+    font-size:25px;
+}
+.client_list_container div{
+    max-height: 700px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.filter_form input{
+    font-size: 25px;
+    padding: 15px;
+    width: 80%;
+}
+.filter_form button{
+    width: 20%;
+    font-size: 20px;
+    margin-left: 2%;
 }

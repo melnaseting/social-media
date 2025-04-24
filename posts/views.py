@@ -20,9 +20,10 @@ class PostsListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        unread_messages = Message.objects.filter(message_to = self.request.user,read = False)
-        if unread_messages:
-            messages.info(self.request, 'У вас нове повідомлення, перегляньте у розділі "Повідомлення"')
+        if self.request.user.is_authenticated:
+            unread_messages = Message.objects.filter(message_to = self.request.user,read = False)
+            if unread_messages:
+                messages.info(self.request, 'У вас нове повідомлення, перегляньте у розділі "Повідомлення"')
         context['comments'] = models.Comment.objects.all()
         context["form"] = forms.CreateCommentForm()
         if self.request.user.is_authenticated:

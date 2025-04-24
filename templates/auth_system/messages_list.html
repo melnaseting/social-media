@@ -4,7 +4,12 @@
     Повідомлення
 {% endblock title %}    
 {% block content %}
-<ol class="list-group list-group-flush" style="background: transparent;width: 40%;">
+<form method="post" action="{% url 'auth_system:delete_messages' %}">
+    {% csrf_token %}
+    <button type="submit">Видалити всі повідомлення для цього користувача</button>
+</form>
+
+<ol class="list-group list-group-flush" style="background: transparent;width: 50%;">
     {% for message in messages  %}
     <a href="{% if message.category == 'folowed_user' %}
         {% url 'auth_system:account' message.message_from.id %}

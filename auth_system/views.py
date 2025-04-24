@@ -5,10 +5,9 @@ from django.contrib import messages
 from . import models
 from posts.forms import CreateCommentForm
 from posts.models import Comment, Post, Like
-from .forms import ClientForm, ClientRegistrationForm, ClientLoginForm
+from .forms import ClientForm, ClientRegistrationForm, ClientLoginForm, ClientFilterForm
 from django.views.generic import UpdateView, DetailView, CreateView, View, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import send_mail
 
 # Create your views here.
   
@@ -53,6 +52,26 @@ class ClientLoginView(View):
     def form_valid(self, form):
         messages.success(self.request, f"Вітаємо, {form.get_user().username}!")
         return super().form_valid(form)
+
+class ClientListView(ListView):
+    model = models.Client
+    template_name = 'auth_system/client_list'
+    context_object_name = 'clients'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        username = self.request.GET.get("username","")
+        if username:
+            queryset = queryset.filter(username__icontains=username)
+        
+        return queryset
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ClientFilterForm(self.request.GET)
+        return context
 
 class ClientProfileView(DetailView):
     model = models.Client
@@ -107,7 +126,6 @@ class ProfileUpdateView(UpdateView):
         messages.success(self.request, "Ваш профіль успішно оновлено")
         return response
 
-    
 class FolowUser(LoginRequiredMixin,CreateView):
     def post(self, request,pk, *args, **kwargs):
         client = get_object_or_404(models.Client, id=pk)
@@ -136,6 +154,11 @@ class MessageListView(LoginRequiredMixin, ListView):
         client = self.request.user
         queryset =  models.Message.objects.filter(message_to=client)
         return queryset.order_by('-created_time')
+    
+    def get_context_data(self, **kwargs):
+        context =  super().get_context_data(**kwargs)
+        
+        return context
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
@@ -145,3 +168,10 @@ class MessageListView(LoginRequiredMixin, ListView):
         models.Message.objects.filter(message_to=client, read=False).update(read=True)
 
         return response
+
+class DeleteMessagesView(View):
+    def post(self, request, *args, **kwargs):
+        client_id = request.user
+        if client_id:
+            models.Message.objects.filter(message_to_id=client_id).delete()
+        return redirect('auth_system:messages')

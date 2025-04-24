@@ -42,3 +42,16 @@ class ClientLoginForm(forms.Form):
         }),
         label="Пароль"
     )
+
+class ClientFilterForm(forms.Form):
+    username = forms.CharField(
+        required=False,
+        max_length=150,
+        label="Нікнейм",
+        widget=forms.TextInput(attrs={
+             'class': 'form-control username_filter',
+             'placeholder': 'Нікнейм',
+            'id': 'id_username',
+            'data-target': 'id_username'
+        }),
+        )
