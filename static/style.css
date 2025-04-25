@@ -79,3 +79,20 @@ body{
     font-style: normal;
     margin-bottom: 100px;
 }
+.chat_wrapper{
+    height: 90vh;
+    background: #4d3a4d;
+    border-radius: 10px;
+    width: 35%;
+    display: flex;
+}
+.chat_container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.message_input {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px;
+}
