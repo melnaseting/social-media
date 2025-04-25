@@ -96,3 +96,6 @@ body{
     border-radius: 5px;
     padding: 10px;
 }
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;             
+}
