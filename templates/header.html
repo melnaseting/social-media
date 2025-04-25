@@ -1,9 +1,78 @@
-<nav class="navbar navbar-expand-lg header">
-  <div class="nav_title"><a class="nav-link nav_title_text" onclick="window.location.reload(true);">Melsi</a></div>     
-  <div class="nav_item"><a class="nav-link" href="#">Головна</a></div>      
-  <div class="nav_item"><a class="nav-link" href="#">Чати</a></div>
-  <div class="nav_item"><a class="nav-link" href="#">Для вас</a></div>
-  <div class="nav_item"><a class="nav-link" href="#">Повідомлення</a></div>
-  <div class="nav_item"><a class="nav-link" href="#">Створити</a></div>
-  <div class="nav_item"><a class="nav-link" href="#">Профіль</a></div>
+<nav class=" header">
+  <div class="nav_title">
+    <a class="nav-link nav_title_text" onclick="window.location.reload(true);">Nosingo</a>
+  </div>     
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}">
+    {% if  request.path == '/' %}
+    <svg xmlns="http://www.w3.org/2000/svg" class="nav_icon" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g transform="scale(6,6)"><path d="M39.5,43h-9c-1.381,0 -2.5,-1.119 -2.5,-2.5v-9c0,-1.105 -0.895,-2 -2,-2h-4c-1.105,0 -2,0.895 -2,2v9c0,1.381 -1.119,2.5 -2.5,2.5h-9c-1.381,0 -2.5,-1.119 -2.5,-2.5v-19.087c0,-2.299 1.054,-4.471 2.859,-5.893l14.212,-11.199c0.545,-0.428 1.313,-0.428 1.857,0l14.214,11.199c1.805,1.422 2.858,3.593 2.858,5.891v19.089c0,1.381 -1.119,2.5 -2.5,2.5z"></path></g></g>
+      </svg>
+    {% else %}
+    <svg xmlns="http://www.w3.org/2000/svg" class="nav_icon" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g transform="scale(6,6)"><path d="M23.95117,4c-0.31984,0.01092 -0.62781,0.12384 -0.87891,0.32227l-14.21289,11.19727c-1.8039,1.42163 -2.85937,3.59398 -2.85937,5.89063v19.08984c0,1.36359 1.13641,2.5 2.5,2.5h10c1.36359,0 2.5,-1.13641 2.5,-2.5v-10c0,-0.29504 0.20496,-0.5 0.5,-0.5h5c0.29504,0 0.5,0.20496 0.5,0.5v10c0,1.36359 1.13641,2.5 2.5,2.5h10c1.36359,0 2.5,-1.13641 2.5,-2.5v-19.08984c0,-2.29665 -1.05548,-4.46899 -2.85937,-5.89062l-14.21289,-11.19727c-0.27738,-0.21912 -0.62324,-0.33326 -0.97656,-0.32227zM24,7.41016l13.28516,10.4668c1.0841,0.85437 1.71484,2.15385 1.71484,3.5332v18.58984h-9v-9.5c0,-1.91495 -1.58505,-3.5 -3.5,-3.5h-5c-1.91495,0 -3.5,1.58505 -3.5,3.5v9.5h-9v-18.58984c0,-1.37935 0.63074,-2.67883 1.71484,-3.5332z"></path></g></g>
+      </svg>
+    {% endif %}
+    
+    <span class="nav-link">Головна</span>
+  </a>
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}">    
+    <!--<img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA70lEQVR4nL2SSQoCMRBFnfbqJRTUEzgtBEW9l8MNdOONxAsICorjwpWLBhdPCnoR0xUNQX0QaJLqRyq/Uql/AmSAGjCMl3xnQkRFYAqcSHIEJlLjK2sBVz5zAZo+sgh/Iqc0btPnZjZnoKAJ5c1CGWtp2gHcgZtjyZnJAUibQhkHE/kp++ats3GNSdUs6JNkDSwdS85s+qaw5ylcAQ+lNiEs84q0k3O0u0Cnaoey8wxF4/ASyhfGZqS1MguUnYC8JtwEyCKgrslKgTdruAa1bRRugXn8pntFJAGM1DYtaUfGx9qT9GWkusAAqCTS/DVPw7TJTljW5C4AAAAASUVORK5CYII=" alt="chat-message">-->
+    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR4nL3U3UpVYRAG4L2ln5OknxON3B5IJKQehAdBOzsqSK/DX5AuolD0SLGDug+7ibqCfiCPxPICKiF4YthjfSzXkr2DemFgrZn53m9m3uFrtf4nMIQZLKTF99DfEN3ANr7o4Vta4AhbuN4v2SMc4z0WMVrERrGED/iKuX7ITrCDC+fkXcQufuDheW1GZTt9tdI7s5tjuVYX3M42GytrqPQjNuvUjGEvFr7hGHyDDRd5yzhEuyScTgVv5v8IfmpGxEYy91b6pkrCp7EWlao7mGiwTpHXxvfgKA8/ScV+Ly0mMVuxe7hcubhdR3g7y+700fJahXCsruUQ5TOeFb4rDYL8GX4vb+WMKBl4gbetAYBL+ISNuuAr7A9IuJfrdrUuGC2vD7DQL1PIB3UJd3Kw8USt4w3exUwxfqp+CrCabUZl3aYbu4WKB3iN51l1IB6MWI1ACLBR22aF9H7sXsUX6sdKPcY87p5R81/jFwCtbuQQjJZ1AAAAAElFTkSuQmCC" alt="chat-message">
+    <span class="nav-link" href="#">Чати</span>
+  </a>
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:client_list' %}"> 
+    {% if request.path == '/client-list/' %}
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g transform="scale(4,4)"><path d="M31,11c-11.027,0 -20,8.973 -20,20c0,11.027 8.973,20 20,20c3.97417,0 7.67238,-1.17843 10.78906,-3.18555l12.9375,12.9375c1.664,1.664 4.36239,1.664 6.02539,0c1.664,-1.664 1.664,-4.36139 0,-6.02539l-12.9375,-12.9375c2.00712,-3.11668 3.18555,-6.8149 3.18555,-10.78906c0,-11.027 -8.973,-20 -20,-20zM31,19c6.616,0 12,5.384 12,12c0,6.616 -5.384,12 -12,12c-6.616,0 -12,-5.384 -12,-12c0,-6.616 5.384,-12 12,-12z"></path></g></g>
+      </svg>
+    {% else %}
+    <svg class="nav_icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g transform="scale(4,4)"><path d="M27,9c-9.925,0 -18,8.075 -18,18c0,9.925 8.075,18 18,18c4.12921,0 7.9263,-1.41263 10.9668,-3.75977l13.08203,13.08203c0.904,0.904 2.36944,0.904 3.27344,0c0.904,-0.904 0.904,-2.36944 0,-3.27344l-13.08203,-13.08203c2.34713,-3.0405 3.75977,-6.83758 3.75977,-10.9668c0,-9.925 -8.075,-18 -18,-18zM27,13c7.719,0 14,6.281 14,14c0,7.719 -6.281,14 -14,14c-7.719,0 -14,-6.281 -14,-14c0,-7.719 6.281,-14 14,-14z"></path></g></g>
+    </svg>
+    {% endif %}
+    
+    <span class="nav-link">Пошук</span>
+  </a>
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:messages' %}"> 
+    <div>
+      {% if request.path == '/messages/' %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA40lEQVR4nNXUQUrDQBQG4BFq0S4qutOtVHsZ8QZewVtY9TSidCG4st26KoIewroRNwqfRKY0hiS0yWz8YSDMhI/kvZkJ4d8FmxhigE7F+lF8p1MHbeMK75Z5wwV6cYzi3CJzXGKrDJuqziMmNeuTP2j8srYZ5WuS/82mmf/WFMfSZRBiN1PlMMTufSfAvrLmLur4kAC8z3f5NAF4UtyL4xbYXdlJ2cNrA+wFu1XH7wDPa2Az7NfdDRm6g9sVsBv0a7ECfIaPEugT59hYGQtLNLuinnJY9jxcGyqgXVzH0W2FNckPOQbHQmXccxYAAAAASUVORK5CYII=" alt="like--v1">
+    {% else %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABJUlEQVR4nNXTzyqEURjH8cFg/EmxYi8zaVyDbKWUC5DdNKLIBbDzZ+cCpBQSZSVZsEaYS/rocGZ6Ry9m3rHxq6fOeX7P+Z7nPec9udy/E3pRwiTyKX4+eqU0vyEMYB81nOICb9hGf4ydmAveWazdQyEN9oAKuhP5HqzjJsZayCX8blRx3wSNnVWadmnecDXED34Vu8kzqyU7a1c+Ow2MfJgUw3lkhdWFc0yFwTQucx0KV+Hmw2AYL38AfMVQfXL30W52WBG3ycQCjjoAHmP+a/IaixlgS+H80oyx+Apm24DNxTWj3xVMhAvCcguwlVg7/lvhSPz8Ewym+AUcxqc42s6fv4UnlBP5GTxjE10twXLN4DIesREjjBsbZBL6cBCjryNYFr0DrGh5PiHRTMkAAAAASUVORK5CYII=" alt="like--v1">
+    {% endif %}
+    {% if user.has_unread_messages %}
+      <div class="unread_message_marker"></div>
+    {% endif %}
+    </div>
+    <span class="nav-link">Повідомлення</span>
+  </a>
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:create_post' %}"> 
+    {% if request.path == '/create/' %}
+    <svg class="nav_icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="23" height="23" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+        <g transform="scale(9,9)"><path d="M15,3c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12zM21,16h-5v5c0,0.553 -0.448,1 -1,1c-0.552,0 -1,-0.447 -1,-1v-5h-5c-0.552,0 -1,-0.447 -1,-1c0,-0.553 0.448,-1 1,-1h5v-5c0,-0.553 0.448,-1 1,-1c0.552,0 1,0.447 1,1v5h5c0.552,0 1,0.447 1,1c0,0.553 -0.448,1 -1,1z"></path></g></g>
+      </svg>
+    {% else %}
+      <svg class="nav_icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="23" height="23" viewBox="0,0,256,256">
+      <g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+      <g transform="scale(9,9)"><path d="M16,3c-7.16797,0 -13,5.83203 -13,13c0,7.16797 5.83203,13 13,13c7.16797,0 13,-5.83203 13,-13c0,-7.16797 -5.83203,-13 -13,-13zM16,5c6.08594,0 11,4.91406 11,11c0,6.08594 -4.91406,11 -11,11c-6.08594,0 -11,-4.91406 -11,-11c0,-6.08594 4.91406,-11 11,-11zM15,10v5h-5v2h5v5h2v-5h5v-2h-5v-5z"></path></g></g>
+      </svg>
+    {% endif %}
+    <span class="nav-link">Створити</span>
+  </a> 
+  <a class="nav_item" style="text-decoration: none;" {% if user.is_authenticated %} href="{% url 'auth_system:account' user.id %}"{% endif %}>
+    {% if '/account/' in request.path %}
+    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVR4nO3TPWpCQRSA0YelCroCbXQHppFsI6WxFHehjYJYxHQRspqkDWlioYWCC7C0PfJAi0D0/cwrUvjBFJfLnGJgoujevUJDCQ94Qieei4Lb+Pa7L7RC4Sp2/m6LSgg+dLtBCL5MwN9C8HkCPgvBHxPwbm48Dq9X4JeoiPCMT+zxgV7070MNfUzxjsl5roWgFSxwvPLmx/O+nBVuYiNdazTSwnWsZOsnvpcGH2WEL43T4DMccpz8vzVPJ6XlI/r7P4mMAAAAAElFTkSuQmCC" alt="person-male--v3">
+    {% else %}
+    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nO2UTyuEURTGX1GjxLDyZzNbyZ6dPYmywDeg+B4IC8JaVixFFmND4QsQxYKNpYWNcp+fR3eaUlPTzLzv2M2zOZ17zv2d0z2nmyQttfQvst3XbGAnsIn08QOOFtiwncsKbgMukG5sj9nusj2OdAucx3h6eAgzSK+2uyuK9iC9OYTp1HBgF9iqEtsGdrLA94G1KrF1YC813NIi0mPl8EpDlp4szaeH2x1Id8Cp7UL5rACclYfcnhoeZbsXOEL6RvosWTi0nU+aJdt528NxU5oGjbI9ZHvC0kLJ2oNJVjmEKeAS6QvpHigiPZR8KDqEycahdg44QHq3tFL5FNG3tBrjcR0b+gqAE6Qr2/01mhhAugaO6+taWkZ6rncbYh7Si6Wl2skhzNkerauTvwIjDmG2kTuZ9QvvskUDfgTi7gAAAABJRU5ErkJggg==" alt="person-male--v2">      
+    {% endif %}
+    
+    <span class="nav-link">Профіль</span>
+  </a> 
   </nav>
+
+  

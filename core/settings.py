@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_htmx',
     'auth_system',
     'messenger',
+    'posts',
 ]
 
 MIDDLEWARE = [
@@ -137,4 +138,5 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
