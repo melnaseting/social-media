@@ -5,33 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <div class="card auth">
+    <div class="card form">
         <h3>Заповніть форму для продовження</h3>
         <form method="post">
             {% csrf_token %}
-            <div class="form-group-my">
-                <label for="id_email">Пошта:</label>
+            <div class="mb-3">
+                <label class="form-label" for="id_email">Пошта:</label>
                 {{ form.email }}
             </div>
-            <div class="form-group-my">
-                <label for="id_username">Юзернейм не може містити пробіли:</label>
+            <div class="mb-3">
+                <label class="form-label" for="id_username">Юзернейм не може містити пробіли:</label>
                 {{ form.username }}
             </div>
-            <div class="form-group-my password-container">
-                <label for="id_password1">Пароль:</label>
+            <div class="mb-3">
+                <label class="form-label" for="id_password1">Пароль:</label>
                 {{ form.password1 }}
-                <span class="toggle-password" data-target="id_password1">
-                    <i class="fas fa-eye"></i>
-                </span>
             </div>
-            <div class="form-group-my password-container">
-                <label for="id_password2">Повторіть пароль:</label>
+            <div class="mb-3">
+                <label class="form-label" for="id_password2">Повторіть пароль:</label>
                 {{ form.password2 }}
-                <span class="toggle-password" data-target="id_password2">
-                    <i class="fas fa-eye"></i>
-                </span>
             </div>
-            <button type="submit" class="btn btn-my m-3">Реєстрація</button>
+            <button type="submit" class="btn-my">Реєстрація</button>
+            <a href="{% url 'auth_system:login' %}" class="a-my-primary">Увійти</a>
         </form>
         {% if form.errors %}
             <ul class="error-list">
@@ -43,38 +38,4 @@
             </ul>
         {% endif %}
     </div>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        {% for message in messages %}
-        Swal.fire({
-            title: '{{ message.tags|default:"Помилка"|capfirst }}',
-            text: '{{ message }}',
-            icon: '{% if "error" in message.tags %}error{% elif "success" in message.tags %}success{% else %}info{% endif %}',
-            showCancelButton: true,
-            confirmButtonText: '{% if "success" in message.tags %}Перейти до профілю{% else %}OK{% endif %}',
-            cancelButtonText: 'Відміна',
-        }).then((result) => {
-            {% if "success" in message.tags %}
-            if (result.isConfirmed) {
-                window.location.href = "{% url 'users:account' %}";
-            }
-            {% endif %}
-        });
-        {% endfor %}
-
-        document.querySelectorAll('.toggle-password').forEach(toggle => {
-            const targetId = toggle.getAttribute('data-target');
-            const passwordField = document.querySelector(`#${targetId}`);
-            if (passwordField) {
-                toggle.addEventListener('click', function () {
-                    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordField.setAttribute('type', type);
-                    this.querySelector('i').classList.toggle('fa-eye');
-                    this.querySelector('i').classList.toggle('fa-eye-slash');
-                });
-            }
-        });
-    });
-</script>
 {% endblock %}

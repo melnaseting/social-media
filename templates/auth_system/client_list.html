@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Список користувачів
+{% endblock title %}
+
+{% block content %}
+<div class="client_list_container">
+    <form method="get" class="form-inline mb-3 d-flex filter_form"> 
+        {{ form.username }} 
+    <button type="submit" class="a-my-primary">Filter</button> 
+    </form>
+    <div class="list-group" style="width: 100%;">
+        {% for client in clients %}
+            <a href="{% url 'auth_system:account' client.id %}" class="list-group-item list-group-item-action"><img class="profile_photo_small" src="{{ client.photo.url }}" alt="">{{ client.username }}</a>   
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

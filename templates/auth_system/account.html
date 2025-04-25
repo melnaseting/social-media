@@ -15,20 +15,130 @@
     {% endfor %}
     </ul>
     {% endif %}
-    
-    <h1> {{ client.username }} підписників - {{ client.get_subscribers_count }}</h1>
-    <img src="{{ client.photo.url }}" alt="" width="500px" height="500px">
+    <div class="profile_parent_div">
+        <img class="profile_photo" src="{{ client.photo.url }}" alt=""> 
+        <div class="profile_child_div">
+            <div class="profile_btn_div">
+                <h4> {{ client.username }}</h4>
+                {% if user != client %}
+                    <form method="post" action="{% url 'auth_system:subscribe' client.id %}">
+                        {% csrf_token %}
+                        {% if is_subscribed %}
+                            <button class="btn btn-secondary" type="submit">Відписатись</button>
+                        {% else %}
+                            <button class="btn btn-primary" type="submit">Підписатись</button>
+                        {% endif %}
+                    </form>
+                    <a class="btn btn-secondary" href="#">Надіслати повідомлення</a>
+                {% else %}
+                    <a href="{% url 'auth_system:edit_account' client.id %}" class="btn btn-secondary">Редагувати профіль</a> 
+                    <a class="btn btn-danger" href="{% url 'auth_system:logout' %}">Вийти з акаунту</a>
+                {% endif %}
+            </div>
+            <div class="post_counts">
+                <p><b style="color: black;">{{ client.get_posts_count }}</b> постів</p>
+                <p><b style="color: black;">{{ client.get_subscribers_count }}</b> підписників</p>
+                <p><b style="color: black;">{{ client.get_subscriptions_count }}</b> підписок</p>
+            </div>
+            {% if client.description %}
+                <p class="profile_description"> {{ client.description }} </p>
+            {% endif %}   
+        </div>
+    </div>
+    <div class="profile_posts">
+    {% for post in posts %}
+        <a id="post{{post.id}}" >
+            <img class="profile_post_image" src="{{ post.photo.url }}" alt="Фото">
+        </a>  
+        <div id="postDetail{{post.id}}" class="post_detail">
+            <div class="post_detail_content">
+                <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
+                <div class="post_detail_right">
+                    <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> {{ post.created_by }} </a>
+                    <div style="float: right;display: flex;">
+                        {% if user == post.created_by %}
+                            <a href="{% url 'posts:delete_post' post.pk %}" class="delete">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                                </svg>
+                            </a>
+                        {% endif %}
+                        <span class="close">&times;</span>
+                        
+                    </div>
+                    <form method="post" action="{% url 'posts:like_post' post.id %}">
+                        {% csrf_token %}
+                        <button class="like_button" type="submit">
+                            {% if post.id in liked_posts %}
+                            <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="1.6">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                                <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ff0000"></path> </g>
+                            </svg>
+                            {% else %}
+                            <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.6">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                                <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ffffff"></path> </g>
+                            </svg>
+                            {% endif %}
+                        </button>
+                        {{ post.like_count }} вподобайок
+                    </form>
+                    {% if post.description %}
+                        <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
+                    {% endif %}
+                    <details class="comments">
+                        <summary>Коментарі</summary>
+                        <div class="comments_div">
+                            {% for comment in comments %}
+                                {% if comment.post == post %}
+                                    <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
+                            {% csrf_token %}
+                            {{ form.text }} 
+                            <button type="submit" class="btn-my">Надіслати</button> 
+                        </form>
+                    </details>   
+                </div>        
+            </div>
+            
+          </div>    
+    {% endfor %}
+</div>
 
-    <form method="post" action="{% url 'auth_system:subscribe' client.id %}">
-        {% csrf_token %}
-        <button class="subscribe_button" type="submit">
-            {% if user.id in subscribers %}
-            <span>Відписатись</span>
-            {% else %}
-            <span>Підписатись</span>
-            {% endif %}
-        </button>
-        {{ client.get_subscriptions_count }} підписок
-    </form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const postLinks = document.querySelectorAll("[id^='post']");
+      postLinks.forEach(function (btn) {
+        if (!btn.id.startsWith("postDetail")) {
+          const postId = btn.id.replace("post", "");
+          const modal = document.getElementById("postDetail" + postId);
+          const closeBtn = modal.querySelector(".close");
+  
+          btn.onclick = function () {
+            modal.style.display = "block";
+          }
+  
+          closeBtn.onclick = function () {
+            modal.style.display = "none";
+          }
+  
+          window.addEventListener("click", function (event) {
+            if (event.target == modal) {
+              modal.style.display = "none";
+            }
+          });
+        }
+      });
+    });
+  </script>
+  
+
 {% endblock content %}
 

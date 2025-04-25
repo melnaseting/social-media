@@ -1,23 +1,29 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from posts.models import Post
 
 class Client(AbstractUser):
     photo = models.ImageField(
         upload_to='media/',
+        default='media\profile_photo.png'
+    )
+    description = models.CharField(
         null=True,
         blank=True,
-        default='static\profile_photo.png'
+        max_length=150
     )
-    description = models.TextField(
-        null=True,
-        blank=True
-    )
+
+    def get_posts_count(self):
+        return Post.objects.filter(created_by = self).count()
 
     def get_subscribers_count(self):
         return Subscription.objects.filter(subscribed_to=self).count()
 
     def get_subscriptions_count(self):
         return Subscription.objects.filter(subscriber=self).count()
+    
+    def has_unread_messages(self):
+        return Message.objects.filter(message_to = self, read = False)
 
 class Subscription(models.Model):
     subscriber = models.ForeignKey(
@@ -37,3 +43,20 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.subscriber.username} → {self.subscribed_to.username}"
+
+class Message(models.Model):
+    text = models.TextField()
+    message_to = models.ForeignKey(
+        Client, 
+        on_delete=models.CASCADE, 
+        related_name='message_to'
+    )
+    message_from = models.ForeignKey(
+        Client, 
+        on_delete=models.CASCADE, 
+        related_name='message_from'
+    )
+    created_time = models.DateTimeField(auto_now=True)
+    read = models.BooleanField(default=False)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE, null=True, blank=True)
+    category = models.CharField(max_length=100,default='None')
