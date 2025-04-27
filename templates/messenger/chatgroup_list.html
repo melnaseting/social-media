@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Чати
+{% endblock title %}
+
+{% block content %}
+
+<div style="margin-left: -58%;">
+    <h1 style="position: absolute; top: 150px; font-size: 50px;">Чати</h1>
+    <div class="list-group" style="width: 50%;position: absolute;top: 250px;">
+        {% if chats %}
+        {% for chat in chats %}
+            <a href="{% url 'messenger:chatroom' chat.group_name %}" style=" align-items: center;" class="list-group-item list-group-item-action d-flex">
+                {% if chat.is_private %}
+                    {% for member in chat.members.all %}
+                        {% if member != user %}
+                            {{ member.username }}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {{ chat.group_name }}
+                {% endif %}
+            </a>
+        {% endfor %}
+        {% else %}
+            <h1>Нажаль, у вас немає чатів</h1>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

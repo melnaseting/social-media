@@ -8,12 +8,18 @@
 <div class="client_list_container">
     <form method="get" class="form-inline mb-3 d-flex filter_form"> 
         {{ form.username }} 
-    <button type="submit" class="a-my-primary">Filter</button> 
+    <button type="submit" class="a-my-primary">Знайти</button> 
     </form>
     <div class="list-group" style="width: 100%;">
-        {% for client in clients %}
-            <a href="{% url 'auth_system:account' client.id %}" class="list-group-item list-group-item-action"><img class="profile_photo_small" src="{{ client.photo.url }}" alt="">{{ client.username }}</a>   
-        {% endfor %}
+        {% if clients %}
+            {% for client in clients %}
+            {% if client != user %}
+            <a href="{% url 'auth_system:account' client.id %}" style=" align-items: center;" class="list-group-item list-group-item-action d-flex"><img class="profile_photo_small" src="{{ client.photo.url }}" alt="">{{ client.username }}</a>
+            {% endif %}   
+            {% endfor %}
+        {% else %}
+            <h1>Нажаль, користувачів з таким ніком не знайдено</h1>
+        {% endif %}
     </div>
 </div>
 {% endblock content %}

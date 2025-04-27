@@ -63,7 +63,12 @@ class DeletePostView(DeleteView):
         unread_messages = Message.objects.filter(message_to = self.request.user,read = False)
         if unread_messages:
             messages.info(self.request, 'У вас нове повідомлення, перегляньте у розділі "Повідомлення"')
-        context['return_url'] = self.request.META.get('HTTP_REFERER', '/')
+        
+        next_url = self.request.POST.get('next') or self.request.META.get('HTTP_REFERER', '/')
+
+        if not url_has_allowed_host_and_scheme(next_url, allowed_hosts={self.request.get_host()}):
+            next_url = '/'
+        context['return_url'] = next_url
         return context
 
     def post(self, request, *args, **kwargs):

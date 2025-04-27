@@ -33,6 +33,8 @@ AUTH_USER_MODEL = "auth_system.Client"
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,7 +133,15 @@ CSRF_TRUSTED_ORIGINS=[
     'https://f9b9-95-158-48-175.ngrok-free.app'
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+#WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = 'core.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

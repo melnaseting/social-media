@@ -13,6 +13,7 @@ body{
     color:#4d3a4d;
 }
 .content{
+    margin-left: 250px;
     color: #4d3a4d;
     width: 100%;
     min-height: 100vh;
@@ -20,9 +21,6 @@ body{
     justify-content: center;
     flex-direction: column;
     align-items: center;
-}
-.form{
-    margin-left: 40%;
 }
 .btn-my {
     background-color: rgb(252, 117, 117);
@@ -111,14 +109,18 @@ body{
     font-style: normal;
     margin-bottom: 100px;
 }
+.post_wraper{
+    margin-left: 7%;
+    margin-bottom: 40px;
+}
 .post{
     display: flex;
     flex-direction: column;
-    padding: 40px;
+    padding: 40px 40px 0px 40px;
     text-align: left;
     color:#4d3a4d;
-    width: 550px;
-    margin-left: 7%;
+    width: 700px;
+    
 }
 .profile_link{
     align-content: center;
@@ -140,22 +142,26 @@ body{
 }
 .post_image{
     border-radius: 10px;
+    min-width: 600px;
+    margin-top: 10px;
+    margin-bottom: 15px;
     width: 600px ;
     height: 600px;
     object-fit: cover;
 }
 .post_description{
     width: 550px;
+    margin-bottom: 15px;
 }
 .like_button{
     text-align: left;
+    margin-bottom: 15px;
     border: none;
     background: transparent;
     font-size: 25px;
 }
 .create_post_form{
     width: 30%;
-    margin-left: 42%;
 }
 .preview_img{
     object-fit: cover;
@@ -167,6 +173,7 @@ body{
 }
 .comments{
     width: 600px;
+    margin-bottom: 40px;
     background: rgba(232, 211, 232, 0.428);
     padding: 20px;
     border-radius: 10px;
@@ -191,6 +198,7 @@ body{
 }
 .profile_parent_div{
     margin-top: -15%;
+    margin-left: -15%;
     display: flex;
     justify-content: space-between;
 }
@@ -227,7 +235,7 @@ body{
     justify-content: space-between;
     width: 45%;
     margin-top: 1%;
-    margin-left: 10%;
+    margin-left: -5%;
     border-top: 1px solid grey;
     padding-top: 1%;
 }
@@ -269,6 +277,7 @@ body{
 }
 .close {
     margin-left: 10%;
+    margin-top: -10%;
     color: #aaa;
     font-size: 28px;
     font-weight: bold;
@@ -305,6 +314,7 @@ body{
     background: transparent;
     font-size: 25px;
 }
+
 .message_li:hover{
     background: rgba(186, 203, 255, 0.41);
     transition: 0.5s;
@@ -313,7 +323,6 @@ body{
     position: fixed;
     top: 100px;
     width: 50%;
-    margin-left: 15%;
     font-size:25px;
 }
 .client_list_container div{

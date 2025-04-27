@@ -17,9 +17,12 @@
     
     <span class="nav-link">Головна</span>
   </a>
-  <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}">    
-    <!--<img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA70lEQVR4nL2SSQoCMRBFnfbqJRTUEzgtBEW9l8MNdOONxAsICorjwpWLBhdPCnoR0xUNQX0QaJLqRyq/Uql/AmSAGjCMl3xnQkRFYAqcSHIEJlLjK2sBVz5zAZo+sgh/Iqc0btPnZjZnoKAJ5c1CGWtp2gHcgZtjyZnJAUibQhkHE/kp++ats3GNSdUs6JNkDSwdS85s+qaw5ylcAQ+lNiEs84q0k3O0u0Cnaoey8wxF4/ASyhfGZqS1MguUnYC8JtwEyCKgrslKgTdruAa1bRRugXn8pntFJAGM1DYtaUfGx9qT9GWkusAAqCTS/DVPw7TJTljW5C4AAAAASUVORK5CYII=" alt="chat-message">-->
-    <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR4nL3U3UpVYRAG4L2ln5OknxON3B5IJKQehAdBOzsqSK/DX5AuolD0SLGDug+7ibqCfiCPxPICKiF4YthjfSzXkr2DemFgrZn53m9m3uFrtf4nMIQZLKTF99DfEN3ANr7o4Vta4AhbuN4v2SMc4z0WMVrERrGED/iKuX7ITrCDC+fkXcQufuDheW1GZTt9tdI7s5tjuVYX3M42GytrqPQjNuvUjGEvFr7hGHyDDRd5yzhEuyScTgVv5v8IfmpGxEYy91b6pkrCp7EWlao7mGiwTpHXxvfgKA8/ScV+Ly0mMVuxe7hcubhdR3g7y+700fJahXCsruUQ5TOeFb4rDYL8GX4vb+WMKBl4gbetAYBL+ISNuuAr7A9IuJfrdrUuGC2vD7DQL1PIB3UJd3Kw8USt4w3exUwxfqp+CrCabUZl3aYbu4WKB3iN51l1IB6MWI1ACLBR22aF9H7sXsUX6sdKPcY87p5R81/jFwCtbuQQjJZ1AAAAAElFTkSuQmCC" alt="chat-message">
+  <a class="nav_item" style="text-decoration: none;" href="{% url 'messenger:messenger' %}">    
+    {% if request.path == '/messenger/' or '/chat/' in request.path %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA70lEQVR4nL2SSQoCMRBFnfbqJRTUEzgtBEW9l8MNdOONxAsICorjwpWLBhdPCnoR0xUNQX0QaJLqRyq/Uql/AmSAGjCMl3xnQkRFYAqcSHIEJlLjK2sBVz5zAZo+sgh/Iqc0btPnZjZnoKAJ5c1CGWtp2gHcgZtjyZnJAUibQhkHE/kp++ats3GNSdUs6JNkDSwdS85s+qaw5ylcAQ+lNiEs84q0k3O0u0Cnaoey8wxF4/ASyhfGZqS1MguUnYC8JtwEyCKgrslKgTdruAa1bRRugXn8pntFJAGM1DYtaUfGx9qT9GWkusAAqCTS/DVPw7TJTljW5C4AAAAASUVORK5CYII=" alt="chat-message">
+    {% else %}
+      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR4nL3U3UpVYRAG4L2ln5OknxON3B5IJKQehAdBOzsqSK/DX5AuolD0SLGDug+7ibqCfiCPxPICKiF4YthjfSzXkr2DemFgrZn53m9m3uFrtf4nMIQZLKTF99DfEN3ANr7o4Vta4AhbuN4v2SMc4z0WMVrERrGED/iKuX7ITrCDC+fkXcQufuDheW1GZTt9tdI7s5tjuVYX3M42GytrqPQjNuvUjGEvFr7hGHyDDRd5yzhEuyScTgVv5v8IfmpGxEYy91b6pkrCp7EWlao7mGiwTpHXxvfgKA8/ScV+Ly0mMVuxe7hcubhdR3g7y+700fJahXCsruUQ5TOeFb4rDYL8GX4vb+WMKBl4gbetAYBL+ISNuuAr7A9IuJfrdrUuGC2vD7DQL1PIB3UJd3Kw8USt4w3exUwxfqp+CrCabUZl3aYbu4WKB3iN51l1IB6MWI1ACLBR22aF9H7sXsUX6sdKPcY87p5R81/jFwCtbuQQjJZ1AAAAAElFTkSuQmCC" alt="chat-message">
+    {% endif %}
     <span class="nav-link" href="#">Чати</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:client_list' %}"> 

@@ -1,6 +1,6 @@
 {% if message.author == user %}
 <li class="flex justify-end mb-4">
-    <div class="bg-green-200 rounded-l-lg rounded-tr-lg p-4 max-w-[75%]">
+    <div class="bg-green-200 rounded-l-lg rounded-tr-lg max-w-[75%]" style="padding: 15px 15px 15px 15px;">
         <span>{{ message.text }}</span>
     </div>
     <div class="flex items-end">
@@ -22,12 +22,11 @@
                 <path fill="white" d="M2.8,13L8,13L8,0.2C7.1,5.5,6.5,8.7,1.7,10.4C-1.6,11.5,1,13,2.8,13z"></path>
             </svg>
         </div>
-        <div class="bg-white p-4 max-w-[75%] rounded-r-lg rounded-tl-lg">
+        <div class="bg-white max-w-[75%] rounded-r-lg rounded-tl-lg" style="padding: 5px 15px 15px 15px; max-width: 70%;">
+            <span style="font-size: 15px; margin-top: -50%; font-weight: bold;">{{ message.author.username }}</span><br>
             <span>{{ message.text }}</span>
         </div>
     </div>
-    <div class="text-sm font-light py-1 ml-10">
-        <span class="text-white">{{ message.author.username }}</span>
-    </div>
+    
 </li>
 {% endif %}

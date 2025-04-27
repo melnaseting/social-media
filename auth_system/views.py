@@ -47,8 +47,6 @@ class ClientLoginView(View):
         message = 'Login failed!'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
-    
-
     def form_valid(self, form):
         messages.success(self.request, f"Вітаємо, {form.get_user().username}!")
         return super().form_valid(form)

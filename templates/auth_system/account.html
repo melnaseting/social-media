@@ -19,7 +19,7 @@
         <img class="profile_photo" src="{{ client.photo.url }}" alt=""> 
         <div class="profile_child_div">
             <div class="profile_btn_div">
-                <h4> {{ client.username }}</h4>
+                <h2 style="font-size: 30px; font-weight: bold;"> {{ client.username }}</h2>
                 {% if user != client %}
                     <form method="post" action="{% url 'auth_system:subscribe' client.id %}">
                         {% csrf_token %}
@@ -29,7 +29,7 @@
                             <button class="btn btn-primary" type="submit">Підписатись</button>
                         {% endif %}
                     </form>
-                    <a class="btn btn-secondary" href="#">Надіслати повідомлення</a>
+                    <a class="btn btn-secondary" href="{% url 'messenger:start-chat' client.username %}">Надіслати повідомлення</a>
                 {% else %}
                     <a href="{% url 'auth_system:edit_account' client.id %}" class="btn btn-secondary">Редагувати профіль</a> 
                     <a class="btn btn-danger" href="{% url 'auth_system:logout' %}">Вийти з акаунту</a>
@@ -55,7 +55,7 @@
                 <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
                 <div class="post_detail_right">
                     <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> {{ post.created_by }} </a>
-                    <div style="float: right;display: flex;">
+                    <div style="float: right;display: flex;margin-top: -50px;">
                         {% if user == post.created_by %}
                             <a href="{% url 'posts:delete_post' post.pk %}" class="delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -65,7 +65,6 @@
                             </a>
                         {% endif %}
                         <span class="close">&times;</span>
-                        
                     </div>
                     <form method="post" action="{% url 'posts:like_post' post.id %}">
                         {% csrf_token %}
