@@ -6,22 +6,33 @@
 
 {% block content %}
 
-<div style="margin-left: -58%;">
-    <h1 style="position: absolute; top: 150px; font-size: 50px;">Чати</h1>
-    <div class="list-group" style="width: 50%;position: absolute;top: 250px;">
+<div style="width: 50%;position: absolute;top: 150px;">
+    <div class="chat_list_header">
+        <h1 style="font-size: 50px;">Чати</h1>
+        <div style="display: flex; align-items: center;"><a class="a-my-primary" href="{% url 'messenger:new_groupchat' %}">Нова группа</a></div>
+    </div>
+    <div class="list-group" style="width: 100%;">
         {% if chats %}
         {% for chat in chats %}
-            <a href="{% url 'messenger:chatroom' chat.group_name %}" style=" align-items: center;" class="list-group-item list-group-item-action d-flex">
+            {% if user in chat.members.all %}
+            <a href="{% url 'messenger:chatroom' chat.group_name %}" style=" align-items: center;font-size: 25px;" class="list-group-item list-group-item-action d-flex">
                 {% if chat.is_private %}
                     {% for member in chat.members.all %}
                         {% if member != user %}
+                            <img src="{{ member.photo.url }}" alt="" class="profile_photo_small">
                             {{ member.username }}
                         {% endif %}
                     {% endfor %}
                 {% else %}
-                    {{ chat.group_name }}
+                    <img src="{{ chat.photo.url }}" alt="" class="profile_photo_small">
+                    {% if chat.groupchat_name %}
+                        {{ chat.groupchat_name }}
+                    {% else %}
+                        {{ chat.group_name }}
+                    {% endif %}
                 {% endif %}
             </a>
+            {% endif %}
         {% endfor %}
         {% else %}
             <h1>Нажаль, у вас немає чатів</h1>

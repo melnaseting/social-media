@@ -62,14 +62,16 @@ class ChatroomConsumer(WebsocketConsumer):
         
         event = {
             'type': 'online_count_handler',
-            'online_count': online_count
+            'online_count': online_count,
         }
         async_to_sync(self.channel_layer.group_send)(self.chatroom_name, event)
         
     def online_count_handler(self, event):
-        online_count = event['online_count']        
+        online_count = event['online_count']      
+
         context = {
-            'online_count' : online_count
+            'online_count': online_count,
+            'chat_group': self.chatroom,
         }
         html = render_to_string("messenger/partials/online_count.html", context)
         self.send(text_data=html) 

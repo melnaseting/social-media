@@ -10,7 +10,7 @@
     <button  type="submit" class="btn-my">Відчистити повідомлення</button>
 </form>
 
-<ol class="list-group" style="width: 50%; position: absolute;top:150px;max-height: 670px; overflow-y: scroll;scrollbar-width: none; border: 1px solid #4d3a4d; border-bottom: none;">
+<ol class="list-group" style="width: 50%; position: absolute;top:150px;max-height: 670px; overflow-y: scroll;scrollbar-width: none; border: 0.5px solid #c1c1c1;; border-bottom: none;">
     {% for message in messages  %}
     <a href="{% if message.category == 'folowed_user' %}
         {% url 'auth_system:account' message.message_from.id %}

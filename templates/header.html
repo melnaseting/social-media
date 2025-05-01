@@ -1,6 +1,8 @@
 <nav class=" header">
   <div class="nav_title">
-    <a class="nav-link nav_title_text" onclick="window.location.reload(true);">Nosingo</a>
+    {% load static %}
+    <img src="{% static 'icon.png' %}" alt="" width="50px" height="50px">
+    <a class="nav-link nav_title_text" onclick="window.location.reload(true);">osingo</a>
   </div>     
   <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}">
     {% if  request.path == '/' %}

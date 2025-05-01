@@ -1,7 +1,7 @@
 {% if message.author == user %}
-<li class="flex justify-end mb-4">
+<li class="flex justify-end mb-1">
     <div class="bg-green-200 rounded-l-lg rounded-tr-lg max-w-[75%]" style="padding: 15px 15px 15px 15px;">
-        <span>{{ message.text }}</span>
+        <span message_text>{{ message.text|urlize }}</span>
     </div>
     <div class="flex items-end">
         <svg height="13" width="8">
@@ -9,9 +9,11 @@
         </svg>
     </div>
 </li>
+{% elif message.author.username == 'adding_message' %}
+    <div class="w-30 p-2" style="border-radius: 10px; color: aliceblue; background: #7c8aa9a2;">{{ message.text }}</div>
 {% else %}
 <li>
-    <div class="flex justify-start">
+    <div class="flex justify-start mb-1">
         <div class="flex items-end mr-2">
             <a href="{% url 'auth_system:account' message.author.id %}">
                 <img class="w-8 h-8 rounded-full object-cover" src="{{ message.author.photo.url }}">
@@ -24,7 +26,7 @@
         </div>
         <div class="bg-white max-w-[75%] rounded-r-lg rounded-tl-lg" style="padding: 5px 15px 15px 15px; max-width: 70%;">
             <span style="font-size: 15px; margin-top: -50%; font-weight: bold;">{{ message.author.username }}</span><br>
-            <span>{{ message.text }}</span>
+            <span class="message_text">{{ message.text|urlize }}</span>
         </div>
     </div>
     
