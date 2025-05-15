@@ -2,7 +2,7 @@
   <div class="nav_title">
     {% load static %}
     <img src="{% static 'icon.png' %}" alt="" width="50px" height="50px">
-    <a class="nav-link nav_title_text" onclick="window.location.reload(true);">osingo</a>
+    <a class="nav_link nav_title_text" onclick="window.location.reload(true);">osingo</a>
   </div>     
   <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:posts' %}">
     {% if  request.path == '/' %}
@@ -17,15 +17,19 @@
       </svg>
     {% endif %}
     
-    <span class="nav-link">Головна</span>
+    <span class="nav_link">Головна</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'messenger:messenger' %}">    
     {% if request.path == '/messenger/' or '/chat/' in request.path %}
-      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA70lEQVR4nL2SSQoCMRBFnfbqJRTUEzgtBEW9l8MNdOONxAsICorjwpWLBhdPCnoR0xUNQX0QaJLqRyq/Uql/AmSAGjCMl3xnQkRFYAqcSHIEJlLjK2sBVz5zAZo+sgh/Iqc0btPnZjZnoKAJ5c1CGWtp2gHcgZtjyZnJAUibQhkHE/kp++ats3GNSdUs6JNkDSwdS85s+qaw5ylcAQ+lNiEs84q0k3O0u0Cnaoey8wxF4/ASyhfGZqS1MguUnYC8JtwEyCKgrslKgTdruAa1bRRugXn8pntFJAGM1DYtaUfGx9qT9GWkusAAqCTS/DVPw7TJTljW5C4AAAAASUVORK5CYII=" alt="chat-message">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+      <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAYtJREFUOE+tlL0uhUEQhp8XoVCIgiiQSPxFuAQKEaGmU0hU7kBCj7gBlYQLUCMqCW5A/CUiSPwXKBQEw8p+J/ut83EOtt2ZZ2fmfWfFPx99xzOzEqADaPRxZ8CepLesvLxAM6sGJoBRoC5KvgSWgDlJdzH4C9DMuoFloOaHadwAQ5I2w7gU0MPWgYoCR/sE9IXQHNC3eVhAZfFb10C7pHt3EQJn/dwKLC4VNiNpMgf0ap5HAjwCzxn0cqAyuLsA6iXZZ4Vm1vkx4J0gwKlXI+k1H9DMSoFbwLkhOZ2SdhPgALASJR8BDxkVVgHN0d2gpNUE2A+sFQB0Ru8CyvI8lAK2AQdRy7WSXuJEM1sAxvIAUy27l0+AhiAwS5Rwbkl4WhQvzF9sMy1pKvbhPDD+CxNeeWN/Chga+/hj6ZuKBLrV65W0neQlKrcCbu2KOa6yYUlbYVIC7AE2/IUTx1nI7eaI24DoFSfAov++vvg0bLkXOJeUq9SvZIv/YJ33ToF9t2JZrXz7YxfTfxL7DoPUhBUSKvhUAAAAAElFTkSuQmCC" x="0" y="0" width="20" height="20"/>
+    </svg>
     {% else %}
-      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABbklEQVR4nL3U3UpVYRAG4L2ln5OknxON3B5IJKQehAdBOzsqSK/DX5AuolD0SLGDug+7ibqCfiCPxPICKiF4YthjfSzXkr2DemFgrZn53m9m3uFrtf4nMIQZLKTF99DfEN3ANr7o4Vta4AhbuN4v2SMc4z0WMVrERrGED/iKuX7ITrCDC+fkXcQufuDheW1GZTt9tdI7s5tjuVYX3M42GytrqPQjNuvUjGEvFr7hGHyDDRd5yzhEuyScTgVv5v8IfmpGxEYy91b6pkrCp7EWlao7mGiwTpHXxvfgKA8/ScV+Ly0mMVuxe7hcubhdR3g7y+700fJahXCsruUQ5TOeFb4rDYL8GX4vb+WMKBl4gbetAYBL+ISNuuAr7A9IuJfrdrUuGC2vD7DQL1PIB3UJd3Kw8USt4w3exUwxfqp+CrCabUZl3aYbu4WKB3iN51l1IB6MWI1ACLBR22aF9H7sXsUX6sdKPcY87p5R81/jFwCtbuQQjJZ1AAAAAElFTkSuQmCC" alt="chat-message">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+      <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAh5JREFUOE+tlM2rTWEYxX/LV9woGSD3EhLKnRsoAyGFpCgDZeQjMyFFGBhddLtJTAwoJpIUAzL08Q/o+IhEvg24UoTL8j6nd5/22fcc5wy8o1Nn79+71rPWs8V/PvoXz/YYYAkwOz/3CqhJ+tPuvZZA29OAA8A2YEb6/T0DJgHvgQvAgKTPVfAooO3lwBXgE3ASuCEpINieCawH9gFTgU2S7pShTcAMuw2cAfZLGmllzfZ44ERSuwtYKelu8VwDmG0+Bi5J2tNNVraHgC3AYknD8U4ZOABsSHb72ymrXpKV1mJEkg42gDnNN8BhSefyvKYA49ooHZH0NT+3I433KNAnyXWFtvuBB8AsSe9sR7Jxwdg2wN9Ar6QPtnuB19lZrQCuAa5K6ikAtqN7MfxW55ek6GSICcY3YKOkmwVwFXAd6ClKa3tRqs3kCi0K/VDSj9LFLYELgKfAnLi5g+Xdks6WgH1AqI0wG5ZjxZ6lsg5JOpWthLpWlodj+CXgTuBIUygZcAxYLWlpNx3M70yI3QYuSzpU7WHYiOhjtbo6aRnCzeZc7C9V4HNgUNLpTrRc6MFUre3ACkn3m1bP9kLgCbAWmA9EjaYDF4Fr0bNI33YEsA7YmxsQH4d7ZQFFbZalJS8W/AVwC/iYgtqaPlXzgJ9p8FGZicBb4Hyq2PG083Wbo4B5wBFGJBhK6yevZCiemxN/CTwqp9wW2Glu3f7/FzEd1BVCU1ANAAAAAElFTkSuQmCC" x="0" y="0" width="20" height="20"/>
+    </svg>
     {% endif %}
-    <span class="nav-link" href="#">Чати</span>
+    <span class="nav_link" href="#">Чати</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:client_list' %}"> 
     {% if request.path == '/client-list/' %}
@@ -40,20 +44,24 @@
     </svg>
     {% endif %}
     
-    <span class="nav-link">Пошук</span>
+    <span class="nav_link">Пошук</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'auth_system:messages' %}"> 
     <div>
       {% if request.path == '/messages/' %}
-      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAA40lEQVR4nNXUQUrDQBQG4BFq0S4qutOtVHsZ8QZewVtY9TSidCG4st26KoIewroRNwqfRKY0hiS0yWz8YSDMhI/kvZkJ4d8FmxhigE7F+lF8p1MHbeMK75Z5wwV6cYzi3CJzXGKrDJuqziMmNeuTP2j8srYZ5WuS/82mmf/WFMfSZRBiN1PlMMTufSfAvrLmLur4kAC8z3f5NAF4UtyL4xbYXdlJ2cNrA+wFu1XH7wDPa2Az7NfdDRm6g9sVsBv0a7ECfIaPEugT59hYGQtLNLuinnJY9jxcGyqgXVzH0W2FNckPOQbHQmXccxYAAAAASUVORK5CYII=" alt="like--v1">
-    {% else %}
-      <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAABJUlEQVR4nNXTzyqEURjH8cFg/EmxYi8zaVyDbKWUC5DdNKLIBbDzZ+cCpBQSZSVZsEaYS/rocGZ6Ry9m3rHxq6fOeX7P+Z7nPec9udy/E3pRwiTyKX4+eqU0vyEMYB81nOICb9hGf4ydmAveWazdQyEN9oAKuhP5HqzjJsZayCX8blRx3wSNnVWadmnecDXED34Vu8kzqyU7a1c+Ow2MfJgUw3lkhdWFc0yFwTQucx0KV+Hmw2AYL38AfMVQfXL30W52WBG3ycQCjjoAHmP+a/IaixlgS+H80oyx+Apm24DNxTWj3xVMhAvCcguwlVg7/lvhSPz8Ewym+AUcxqc42s6fv4UnlBP5GTxjE10twXLN4DIesREjjBsbZBL6cBCjryNYFr0DrGh5PiHRTMkAAAAASUVORK5CYII=" alt="like--v1">
-    {% endif %}
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+        <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAVlJREFUOE+tlLErRXEUxz9folDIYLAJj4w2sQml8AeoN/oT1CvKYGA1KFbZCQs2ymYyIGVUBspCouP+Xr97uy73vefde7bf75zz+XXO73uOyNmUM49fQDNrAvqAL+BB0mf8Ue/vBRqA+6Q/AppZS5C4CiwCnR7yDGwDa/684v1d/vwC7Lg8Se/urgz0sFNgLKUF5z52PMV/AUw6aAjcAJYy9nNdUkm+J0+xMuvluvK7HXAQuKmXksgrOOAAcJcTsN8BW4FXoDEj1MmrPfyUM2AiI/BE0nQInAf2MwLnJB3GhX0MzNQJPZI0Gwnbi9up/xIo/BN6C4xKcrL5Octm1hNMi5uY4Rqh18CUpMcw/q/l0BEsh12gXEIFOwCKkpxCIktdX2ZWDJS/BbQloG9ACdiUZMkHK+5DMxsC9oARn3gFLEhKnayqC9bMmmPra1nSR6U+VAXW+DlR2DcWGWZeEX6lLAAAAABJRU5ErkJggg==" x="0" y="0" width="20" height="20"/>
+      </svg>
+      {% else %}
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+        <image xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAcJJREFUOE+tlD9IllEUxn+PlhRIQ1tLCCZh5FStQQRhKEGiIdIQGGhRg6MglNBQQxAORZRYLhYKEpESNNgquEVDRTi2NQQRUT3dI/fVr6/Pz88/d7nw3nN+7/nznCN2+GiHefwHtL0baAZ+AcuS4l49tncBTUDcn8rfV4G29yavm8AZ4H12aAFeALczcRg4B3wEfgOtwOvwk/QjbFaAGfYqGTwHHkn6k7/XA1eB9gycBx5IClj41QEDQDfQEdACeAf4LOlhpZraDiiS7q/zfgU4KGlYuWaLwLEiss02Kke6BJwI4OEU/Q1JfZsFlTVraoVj+0jKZlRSzzaBM0kZIwFsBBYkHd8mMFI+WTQlWn89pf1hK9BctnuSzhbATuC8pP4tAieAaUlzpcKeTRPwRFIIueZjuwvokxRaXBs92/uBN8CQpLe1EG2fAu4CpyV9/QeYlX8g6fElMCZpshrU9iXgGtAp6UthW2k57AOeAt+AQUnfy/S2B4jJOpSWw8UisnWBJTM6lJbEBaA/1edd/t4GjAMh4uiqy7Ooug9tHwUeA8+yYy9wufhBpZJsuGBtN6RVdis7j0j6Wa22GwJr6XapzV9O5KVmKNXRNAAAAABJRU5ErkJggg==" x="0" y="0" width="20" height="20"/>
+      </svg>
+      {% endif %}
     {% if user.has_unread_messages %}
       <div class="unread_message_marker"></div>
     {% endif %}
     </div>
-    <span class="nav-link">Повідомлення</span>
+    <span class="nav_link">Повідомлення</span>
   </a>
   <a class="nav_item" style="text-decoration: none;" href="{% url 'posts:create_post' %}"> 
     {% if request.path == '/create/' %}
@@ -67,7 +75,7 @@
       <g transform="scale(9,9)"><path d="M16,3c-7.16797,0 -13,5.83203 -13,13c0,7.16797 5.83203,13 13,13c7.16797,0 13,-5.83203 13,-13c0,-7.16797 -5.83203,-13 -13,-13zM16,5c6.08594,0 11,4.91406 11,11c0,6.08594 -4.91406,11 -11,11c-6.08594,0 -11,-4.91406 -11,-11c0,-6.08594 4.91406,-11 11,-11zM15,10v5h-5v2h5v5h2v-5h5v-2h-5v-5z"></path></g></g>
       </svg>
     {% endif %}
-    <span class="nav-link">Створити</span>
+    <span class="nav_link">Створити</span>
   </a> 
   <a class="nav_item" style="text-decoration: none;" {% if user.is_authenticated %} href="{% url 'auth_system:account' user.id %}"{% endif %}>
     {% if '/account/' in request.path %}
@@ -76,7 +84,7 @@
     <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAABOUlEQVR4nO2UTyuEURTGX1GjxLDyZzNbyZ6dPYmywDeg+B4IC8JaVixFFmND4QsQxYKNpYWNcp+fR3eaUlPTzLzv2M2zOZ17zv2d0z2nmyQttfQvst3XbGAnsIn08QOOFtiwncsKbgMukG5sj9nusj2OdAucx3h6eAgzSK+2uyuK9iC9OYTp1HBgF9iqEtsGdrLA94G1KrF1YC813NIi0mPl8EpDlp4szaeH2x1Id8Cp7UL5rACclYfcnhoeZbsXOEL6RvosWTi0nU+aJdt528NxU5oGjbI9ZHvC0kLJ2oNJVjmEKeAS6QvpHigiPZR8KDqEycahdg44QHq3tFL5FNG3tBrjcR0b+gqAE6Qr2/01mhhAugaO6+taWkZ6rncbYh7Si6Wl2skhzNkerauTvwIjDmG2kTuZ9QvvskUDfgTi7gAAAABJRU5ErkJggg==" alt="person-male--v2">      
     {% endif %}
     
-    <span class="nav-link">Профіль</span>
+    <span class="nav_link">Профіль</span>
   </a> 
   </nav>
 

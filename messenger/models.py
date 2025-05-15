@@ -12,6 +12,9 @@ default_group_imeges=[
     'media/chat_group_images/5.png'
 ]
 
+def generate_unique_invite_code():
+    return shortuuid.uuid()[:10]
+
 # Create your models here.
 class ChatGroup(models.Model):
     group_name = models.CharField(max_length=128, unique = True, default=shortuuid.uuid)
@@ -21,6 +24,18 @@ class ChatGroup(models.Model):
     client_online = models.ManyToManyField(Client, related_name='online_in_groups', blank=True)
     members = models.ManyToManyField(Client, related_name='chat_groups', blank=True)
     is_private = models.BooleanField(default=False)
+    invite_code = models.CharField(max_length=16, unique=True, editable=False, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.invite_code:
+            self.invite_code = self._generate_unique_invite_code()
+        super().save(*args, **kwargs)
+
+    def _generate_unique_invite_code(self):
+        while True:
+            code = shortuuid.uuid()[:10]
+            if not ChatGroup.objects.filter(invite_code=code).exists():
+                return code
 
     def __str__(self):
         return self.group_name

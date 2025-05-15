@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import  Q
 from django.contrib.auth import logout, login, authenticate
 from django.urls import reverse,reverse_lazy
 from django.contrib import messages
@@ -57,7 +58,7 @@ class ClientListView(ListView):
     context_object_name = 'clients'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().exclude(username='adding_message')
 
         username = self.request.GET.get("username","")
         if username:

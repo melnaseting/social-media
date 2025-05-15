@@ -8,5 +8,7 @@ urlpatterns = [
     path('chat/new-groupchat/', views.create_groupchat, name="new_groupchat"),  
     path('start-chat/<username>/', views.get_or_create_chatroom, name="start-chat"),
     path('chat/<chatroom_name>/', views.chat_view, name='chatroom'),
-    path('chat/edit/<group_name>', views.chatroom_edit_view, name='edit_chatroom')
+    path('chat/edit/<group_name>', views.chatroom_edit_view, name='edit_chatroom'),
+    path('invite/<str:invite_code>', views.add_client, name='invite_url'),
+    path('chat/<chatroom_name>/leave', views.leave_group, name='leave_group'),
 ]

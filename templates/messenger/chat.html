@@ -13,11 +13,12 @@
 {% endblock title %}
 
 {% block content %}
-<div class="chat_wrapper" {% if other_user %}style="width: 40%;"{% endif %}>
+    
+<div class="chat_wrapper" >
     <div class="d-flex w-full">
         <div id="chat_window" class="chat_container">
-            <div class="flex justify-center text-emerald-400 p-2 sticky top-0 z-10" style="border-bottom: 1px solid white; height: 10%; align-items: center;">
-                <a class="absolute left-9" href="{% url 'messenger:messenger' %}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZklEQVR4nO3YvUrEQBSG4SPqDVhoI4iFaKdoIevPXdgoaKEg2gn2CmtrqxexFyCLze6e7ztJ0Gyhgtr4cycrKQIWGREs9gTngelfJmTmJCJRFEX/F8lNANckm2Y2KR6p6jbJdwCfxSJ5MxgMRsQTVd0F8FFGlitN0ynxwsz2qyIB3HU6nTHxgORRRWDx2J9VdVU8UNXjUCTJhngA4KQqEsBTr9dbFg8AnAYiH0kuDbtPiqNGVc8Cj/sBwKKLSJLngZ3sm9mCl8hmIDInOT/sRmm1WqOqehmIvO92u3PiAcmLQGRiZjPiQZIkE1U3DklkWTYtXrTb7cpQAOZmN0skQ8dRmmXZrHhRize+VmdorW6lWt3zv52cAKyIJ/rDLGpma+IJgMPAzr4A2BBPABwELoVXVV0XTwDsBWL7eZ6PiycAdr5/05fL1UxQMrMtkm/fXqzbYkwUj0g2SF4V46Grnw9RFEXyZ18fu4eSeOzA4gAAAABJRU5ErkJggg==" alt="back"></a>
+            <div class="flex justify-center text-emerald-400 p-2 sticky top-0 z-10" style="border-bottom: 1px solid white; height: 10%; align-items: center; background-color: #4d3a4d;">
+                <a class="absolute" style="left: 2%;" href="{% url 'messenger:messenger' %}"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAACXBIWXMAAAsTAAALEwEAmpwYAAABZklEQVR4nO3YvUrEQBSG4SPqDVhoI4iFaKdoIevPXdgoaKEg2gn2CmtrqxexFyCLze6e7ztJ0Gyhgtr4cycrKQIWGREs9gTngelfJmTmJCJRFEX/F8lNANckm2Y2KR6p6jbJdwCfxSJ5MxgMRsQTVd0F8FFGlitN0ynxwsz2qyIB3HU6nTHxgORRRWDx2J9VdVU8UNXjUCTJhngA4KQqEsBTr9dbFg8AnAYiH0kuDbtPiqNGVc8Cj/sBwKKLSJLngZ3sm9mCl8hmIDInOT/sRmm1WqOqehmIvO92u3PiAcmLQGRiZjPiQZIkE1U3DklkWTYtXrTb7cpQAOZmN0skQ8dRmmXZrHhRize+VmdorW6lWt3zv52cAKyIJ/rDLGpma+IJgMPAzr4A2BBPABwELoVXVV0XTwDsBWL7eZ6PiycAdr5/05fL1UxQMrMtkm/fXqzbYkwUj0g2SF4V46Grnw9RFEXyZ18fu4eSeOzA4gAAAABJRU5ErkJggg==" alt="back"></a>
                 {% if other_user %}
                     <a href="{% url 'auth_system:account' other_user.id %}">
                         <div class="flex items-center gap-2 p-4 sticky top-0 z-10">
@@ -49,7 +50,9 @@
                     </div>
                 </a>
                 {% endif %}
+                <button onclick="toggleDiv()"><img src="https://cdn-icons-png.flaticon.com/512/33/33308.png" class="chat_members_icon" alt=""></button>
                 {% endif %}
+                
             </div>
             
             <div id='chat_container' class="overflow-y-auto grow scrollbar-hidden">
@@ -64,37 +67,33 @@
                 
             </div>
             <div class="sticky bottom-0 z-10 p-2">
-                <div class="flex items-center rounded-xl px-2 py-2">
-                    <form 
-                        id="chat_message_form"
-                        method="POST"
-                        hx-ext="ws"
-                        ws-connect="/ws/chatroom/{{ chatroom_name }}"
-                        ws-send
-                        class="message_input"
-                        _="on htmx:wsAfterSend reset() me"
-                    >
-                        {% csrf_token %}
-                        {{ form.text }}
-                    </form>
-                    
-                    
-                </div>
+                <form 
+                id="chat_message_form"
+                method="POST"
+                hx-ext="ws"
+                ws-connect="/ws/chatroom/{{ chatroom_name }}"
+                ws-send
+                class="message_input"
+                _="on htmx:wsAfterSend reset() me"
+            >
+                {% csrf_token %}
+                {{ form.text }}
+            </form>
             </div>
         </div>
     </div>   
     {% if not chat_group.is_private %}
-    <div class="chat_members" style="width: 450px;border-left: 0.5px solid white; color: white;">
+    <div id="chatMembers" class="chat_members">
         <h2 style="font-size: 35px; margin: 20px; text-align: center;">Учасники чату</h2>
         <div class="members_count" style="display: flex;margin: 25px 25px 15px 25px;justify-content: space-between;">
             {% load user_filters %}
             <p>{{ chat_group.get_members_count|user_declension }}</p>
 
-            <button id="copyBtn" onclick="copyPageUrl()" style="background: transparent; border: none; color: #00ffcc; cursor: pointer; font-size: 14px; margin-left: 25%;">
+            <button id="copyBtn" onclick="copyInviteUrl('{{ chat_group.invite_code }}')" style="background: transparent; border: none; color: #00ffcc; cursor: pointer; font-size: 14px; margin-left: 25%;">
                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAACXBIWXMAAAsTAAALEwEAmpwYAAABz0lEQVR4nMXVy6tPURTA8Z8r1yPlkRjcgUJRymNwSd08ikyVV7kDAykDZHB1B4YUPxNz+QOQyRUKd+BOPJOBFEZEySN5lAzoo91davs55+fc3/mVVWtw9l57fddae691Go3/JejBXozhLV7jItZ2CzAFI8YlOb+Em/iKnzjYDcjpADTRm6334VaANtQBzMJ3XCvZn48PuFEHsjWyGGxjczYC6ekUsj0gW9rYnAqbaZ1CVoSDY21sxvCiI0Dm5BE+YWHB3mAEcbwuZA2+xQUfwFKsxhn8wGPMrAUJ0Do89beMYF5tQAaanPohNR/2YVnXnE8wkEnox2EcxY7Ua+0OrA/D4Qq6IGWGOwUl/YwjRYDdqsuFAHzM1h5ESXNptkLShH2HJVj0D51ekMEVbCwIaCCHpEn7quI99Bc4K4Oczw82Y7r2VYAcCgcP4xeQ9ARWZt9Jv/wxGbA8Gu1yPt5LIMMB2Y/NoaswJ/tOeh/vyw6nsbINUwsAvdg5gXLdLYpyD96EQRotT3Ado3iW7g1z45lWgQyVlSO9nl04h9t4HvNqFCcxO/VBi7Or2NSyloKa0agjxh/Lb0mXfK8FsLgWIAMNpGeKl9FnCTRUO4NO5BeenMawdOCZBAAAAABJRU5ErkJggg==" alt="add-user-male--v1">
             </button>
         </div>
-        <ul id="groupchat-members" class="list-group" style="margin: 10px;">            
+        <div id="groupchat-members" class="list-group member_list" style="margin: 10px;">            
             {% for member in members %}
             <a class="list-group-item list-group-item-action d-flex"
             href="{% url 'auth_system:account' member.id %}"
@@ -113,11 +112,22 @@
                         {{ member.username }}</div>
                 </a>
             {% endfor %}
-        </ul>
-        
+        </div>
+        {% if chatroom_name != 'public-chat' %}            
+        <a style="color: rgb(255, 45, 45);margin-left: 10%;" href="{% url 'messenger:leave_group' chatroom_name %}">
+            {% if user == chat_group.admin %}
+                Видалити чат
+            {% else %}
+               Залишити чат
+            {% endif %}
+        </a>
+        {% endif %}
     </div>
+    <div id="overlay" onclick="toggleDiv()"></div>
     {% endif %}
 </div>
+
+
 
 <script>
     function scrollToBottom(time=0) {
@@ -128,21 +138,24 @@
     }
     scrollToBottom();
   
-    function copyPageUrl() {
-      const pageUrl = window.location.href;
-      navigator.clipboard.writeText(pageUrl)
+    function copyInviteUrl(inviteCode) {
+    const siteUrl = window.location.origin;
+    const fullUrl = `${siteUrl}/invite/${inviteCode}`;
+
+    navigator.clipboard.writeText(fullUrl)
         .then(() => {
-          const btn = document.getElementById("copyBtn");
-          const originalText = btn.innerHTML;
-          btn.innerHTML = "Скопійовано!";
-          setTimeout(() => {
+        const btn = document.getElementById("copyBtn");
+        const originalText = btn.innerHTML;
+        btn.innerHTML = "Скопійовано!";
+        setTimeout(() => {
             btn.innerHTML = originalText;
-          }, 2000);
+        }, 2000);
         })
         .catch(err => {
-          console.error("Failed to copy: " + err);
+        console.error("Failed to copy: " + err);
         });
     }
+
   const socket = new WebSocket("ws://" + window.location.host + "/ws/chatroom/{{ chatroom_name }}/");
 
   socket.onmessage = function(e) {
@@ -153,6 +166,16 @@
       container.outerHTML = data.html;
     }
   };
+
+  function toggleDiv() {
+    const overlay = document.getElementById("overlay");
+    const modal = document.getElementById("chatMembers");
+
+    const isHidden = overlay.style.display === "none" || overlay.style.display === "";
+
+    overlay.style.display = isHidden ? "block" : "none";
+    modal.style.display = isHidden ? "block" : "none";
+    }
 </script>
 
   

@@ -16,7 +16,7 @@
         </ul>
     {% endif %}
     {% if posts %}
-    <div class="post_wraper" style="margin-left: -0.25%;">
+    <div class="post_wraper">
         {% for post in posts %}
         <div class="post">
             <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> 
@@ -58,11 +58,11 @@
                     <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
                         {% csrf_token %}
                         {{ form.text }} 
-                        <button type="submit" class="btn-my">Надіслати</button> 
+                        <button type="submit" class="btn-my send_comment_btn">Надіслати</button> 
                     </form>
                 </details>
                 
-                <hr width="600px">
+                <hr width="100%">
             </div>
             
     {% endfor %}

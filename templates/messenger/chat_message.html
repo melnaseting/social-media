@@ -1,7 +1,7 @@
 {% if message.author == user %}
 <li class="flex justify-end mb-1">
     <div class="bg-green-200 rounded-l-lg rounded-tr-lg max-w-[75%]" style="padding: 15px 15px 15px 15px;">
-        <span message_text>{{ message.text|urlize }}</span>
+        <span class="message_text">{{ message.text|urlize }}</span>
     </div>
     <div class="flex items-end">
         <svg height="13" width="8">

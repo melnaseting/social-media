@@ -6,12 +6,12 @@
 
 {% block content %}
 
-<div style="width: 50%;position: absolute;top: 150px;">
+<div class="chat_list_div">
     <div class="chat_list_header">
         <h1 style="font-size: 50px;">Чати</h1>
         <div style="display: flex; align-items: center;"><a class="a-my-primary" href="{% url 'messenger:new_groupchat' %}">Нова группа</a></div>
     </div>
-    <div class="list-group" style="width: 100%;">
+    <div class="list-group chat_list">
         {% if chats %}
         {% for chat in chats %}
             {% if user in chat.members.all %}

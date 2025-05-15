@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Max
+from django.db.models import Max, Q
 from django.http  import HttpResponse, Http404
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
@@ -7,41 +7,41 @@ from . import models
 from .import forms
 from auth_system.models import Client
 from django.views.generic import ListView, UpdateView
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 @login_required
-def chat_view(request, chatroom_name = 'public-chat'):
+def chat_view(request, chatroom_name='public-chat'):
     chat_group = get_object_or_404(models.ChatGroup, group_name=chatroom_name)
     chat_messages = models.GroupMessage.objects.filter(group=chat_group)
     form = forms.MessageCreateForm()
-
-    other_user = None
     members = chat_group.members.all()
-   
+    other_user = None
+
     if chatroom_name == 'public-chat':
         for client in Client.objects.all():
             chat_group.members.add(client)
-            
+    
+    # Проверка доступа
+    if request.user not in members:
+        raise Http404("Ви не є учасником цього чату")
+
+    # Определение другого участника для приватных чатов
     if chat_group.is_private:
-        if request.user not in members:
-            raise Http404()
-        for member in chat_group.members.all():
+        for member in members:
             if member != request.user:
                 other_user = member
                 break
 
-    if chat_group.groupchat_name:
-        if request.user not in chat_group.members.all():
-            chat_group.members.add(request.user)
-            models.GroupMessage.objects.create(
-                group = chat_group,
-                author = get_object_or_404(Client, username='adding_message'),
-                text = f'{request.user.username} приєднався до групи'
-            )
-        
+    for client in chat_group.members.all():
+        if client.username == 'adding_message':
+            chat_group.members.remove(client)
 
+    # Обработка отправки сообщения
     if request.method == 'POST':
+        if request.user not in chat_group.members.all():
+            return HttpResponse(status=403)
+
         form = forms.MessageCreateForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
@@ -53,8 +53,8 @@ def chat_view(request, chatroom_name = 'public-chat'):
                 html = render_to_string('messenger/partials/chat_message_p.html', {'message': message, 'user': request.user})
                 return HttpResponse(html)
 
-            return redirect('messenger:chat')
-    
+            return redirect('messenger:chatroom', chatroom_name)
+
     return render(request, "messenger/chat.html", {
         'chat_messages': chat_messages,
         'form': form,
@@ -63,6 +63,25 @@ def chat_view(request, chatroom_name = 'public-chat'):
         'members': members,
         'chat_group': chat_group
     })
+
+@login_required
+def confirm_join(request, chatroom_name):
+    chat_group = get_object_or_404(models.ChatGroup, group_name=chatroom_name)
+
+    if request.user in chat_group.members.all():
+        return redirect('messenger:chatroom', chatroom_name)
+
+    if chat_group.is_private:
+        raise Http404()
+
+    chat_group.members.add(request.user)
+    models.GroupMessage.objects.create(
+        group=chat_group,
+        author=get_object_or_404(Client, username='adding_message'),
+        text=f'{request.user.username} приєднався до групи'
+    )
+    return redirect('messenger:chatroom', chatroom_name)
+
 
 @login_required
 def get_or_create_chatroom(request, username):
@@ -82,7 +101,7 @@ def get_or_create_chatroom(request, username):
 
     return redirect('messenger:chatroom', chatroom_name=chatroom.group_name)
 
-class ChatListView(ListView):
+class ChatListView(LoginRequiredMixin,ListView):
     model = models.ChatGroup
     template_name = 'messenger/chat_list.html'
     context_object_name = 'chats'
@@ -90,6 +109,8 @@ class ChatListView(ListView):
     def get_queryset(self):
         return models.ChatGroup.objects.annotate(
             last_msg_time=Max('chat_messages__created_time')
+        ).exclude(
+            Q(is_private=True) & Q(members__username='adding_message')
         ).order_by('-last_msg_time')
 
 @login_required
@@ -140,3 +161,30 @@ def chatroom_edit_view(request, group_name):
         'chat_group' : chat_group
     }   
     return render(request, 'messenger/edit_chat.html', context) 
+
+@login_required
+def add_client(request,invite_code):
+    group = get_object_or_404(models.ChatGroup, invite_code = invite_code)
+    if request.user not in group.members.all():
+        group.members.add(request.user)
+        models.GroupMessage.objects.create(
+            group = group,
+            author = get_object_or_404(Client, username='adding_message'),
+            text = f'{request.user} приєднався до чату'
+        )
+    return redirect('messenger:chatroom', group.group_name) 
+
+@login_required
+def leave_group(request, chatroom_name):
+    group = get_object_or_404(models.ChatGroup, group_name = chatroom_name)
+    if request.user in group.members.all() and chatroom_name!='public-chat':
+        if request.user != group.admin:
+            group.members.remove(request.user)
+            models.GroupMessage.objects.create(
+                group = group,
+                author = get_object_or_404(Client, username='adding_message'),
+                text = f'{request.user} користувач покинув чат'
+            )
+        else:
+            group.delete()
+        return redirect('messenger:messenger')

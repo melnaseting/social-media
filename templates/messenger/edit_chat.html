@@ -5,13 +5,19 @@
 {% endblock title %}
 
 {% block content %} 
-<div class="card" style="width: 30%;">
+<div  class="card" id="group_edit_card">
     <h1 style="font-size: 25px;text-align: center;font-weight: bold;margin-bottom: 15px;">Редагування Чату</h1>
 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.groupchat_name }}
 
+    <div class="d-flex">
+        <img id="preview" class="group_img_preview" src="{{chat_group.photo.url}}" alt="Превью зображення">
+        <div>
+            {{ form.groupchat_name }}
+            {{ form.photo }}
+        </div>
+    </div>
     <div class="my-4">
     <h2>Користувачі</h2>
     {% for member in chat_group.members.all %}
@@ -33,7 +39,24 @@
     <button class="a-my-primary" type="submit">Оновити</button>
 </form>
 
-<a href="#" class="flex justify-end mt-4 text-gray-400 hover:text-red-500" >Delete Chatroom</a>
-
 </div>
+
+<script>
+    const input = document.getElementById('id_photo');
+    const preview = document.getElementById('preview');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.style.display = 'none';
+        }
+    });
+</script>
 {% endblock %}

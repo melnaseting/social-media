@@ -27,10 +27,14 @@ class GroupCreateForm(forms.ModelForm):
 class ChatRoomEditForm(forms.ModelForm):
     class Meta:
         model = models.ChatGroup
-        fields = ['groupchat_name']
+        fields = ['groupchat_name','photo']
         widgets = {
             'groupchat_name' : forms.TextInput(attrs={
                 'class': 'form-control', 
                 'maxlength' : '300', 
                 }),
+            'photo' : forms.FileInput(attrs={
+                'class': 'form-control',
+                "type":"file","accept":"image/png, image/jpeg"
+                })
         }
