@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.db.models import Max, Q
+from django.db.models import Max, Q, Count
 from django.http  import HttpResponse, Http404
 from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
@@ -108,7 +108,10 @@ class ChatListView(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         return models.ChatGroup.objects.annotate(
-            last_msg_time=Max('chat_messages__created_time')
+            last_msg_time=Max('chat_messages__created_time'),
+            num_members=Count('members')
+        ).exclude(
+            Q(is_private=True) & Q(num_members__lte=1)
         ).exclude(
             Q(is_private=True) & Q(members__username='adding_message')
         ).order_by('-last_msg_time')

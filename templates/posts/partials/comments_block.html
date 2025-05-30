@@ -1,0 +1,5 @@
+{% for comment in comments %}
+    {% if comment.post == post %}
+        <p class="post_description"><b>{{ comment.created_by }}:</b> {{ comment.text }}</p>
+    {% endif %}
+{% endfor %}

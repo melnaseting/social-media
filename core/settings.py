@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-qnpzw+gh7@lh_u$9q2*pynp8yndt@*_s$q+w6@@l+7y(bgz36b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 AUTH_USER_MODEL = "auth_system.Client"
 
@@ -129,12 +130,13 @@ STATICFILES_DIRS = [
 print(STATICFILES_DIRS)
 LOGIN_URL = '/login/'
 
-CSRF_TRUSTED_ORIGINS=[
-    'https://f9b9-95-158-48-175.ngrok-free.app'
+CSRF_TRUSTED_ORIGINS = [
+    'https://5901-176-116-87-2.ngrok-free.app',
 ]
 
 #WSGI_APPLICATION = 'core.wsgi.application'
 ASGI_APPLICATION = 'core.asgi.application'
+
 
 
 CHANNEL_LAYERS = {

@@ -77,7 +77,12 @@
     {% endif %}
     <span class="nav_link">Створити</span>
   </a> 
-  <a class="nav_item" style="text-decoration: none;" {% if user.is_authenticated %} href="{% url 'auth_system:account' user.id %}"{% endif %}>
+  <a class="nav_item" style="text-decoration: none;" 
+  {% if user.is_authenticated %} 
+  href="{% url 'auth_system:account' user.id %}"
+  {% else %}
+  href="{% url 'auth_system:login' %}"
+  {% endif %}>
     {% if '/account/' in request.path %}
     <img class="nav_icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXCAYAAADgKtSgAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAvUlEQVR4nO3TPWpCQRSA0YelCroCbXQHppFsI6WxFHehjYJYxHQRspqkDWlioYWCC7C0PfJAi0D0/cwrUvjBFJfLnGJgoujevUJDCQ94Qieei4Lb+Pa7L7RC4Sp2/m6LSgg+dLtBCL5MwN9C8HkCPgvBHxPwbm48Dq9X4JeoiPCMT+zxgV7070MNfUzxjsl5roWgFSxwvPLmx/O+nBVuYiNdazTSwnWsZOsnvpcGH2WEL43T4DMccpz8vzVPJ6XlI/r7P4mMAAAAAElFTkSuQmCC" alt="person-male--v3">
     {% else %}

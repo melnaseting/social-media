@@ -12,8 +12,8 @@
     <form method="post">
         {% csrf_token %}
         <input type="hidden" name="return_url" value="{{ return_url }}">
-        <button type="submit" class="btn-my">Так, видалити</button>
-        <a href="{{return_url}}" class="a-my-primary">Ні, повернутися назад </a>
+        <button type="submit" class="btn-my profile_btn">Так, видалити</button>
+        <a href="{{return_url}}" class="a-my-primary profile_btn">Ні, повернутися назад </a>
     </form>
 </div>
 {% endblock content %}

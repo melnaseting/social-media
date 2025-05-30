@@ -37,6 +37,21 @@ body{
     color: rgb(248, 238, 238);
     transition: 0.5s;
 }
+
+.btn-my-secondary{
+    background-color: rgb(185, 185, 185);
+    border: none;
+    color: black;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.btn-my-secondary:hover{
+    background-color: rgb(90, 90, 90);
+    color: rgb(248, 238, 238);
+    transition: 0.5s;
+}
 .a-my-primary{
     padding: 20px;
     text-decoration: none;
@@ -159,8 +174,15 @@ body{
     max-height: 80vh;
     object-fit: cover;
 }
+.post_detail_image{
+    border-radius: 10px;
+    width: 50%;
+    height: auto;
+    object-fit: cover;
+    max-height: 80vh;
+}
 .post_description{
-    width: 550px;
+    max-width: 50%;
     margin-bottom: 15px;
 }
 .like_button{
@@ -183,6 +205,7 @@ body{
     max-height: 45vh;
 }
 .comments{
+    position: relative;
     width: 100%;
     margin-bottom: 40px;
     background: rgba(232, 211, 232, 0.428);
@@ -208,9 +231,7 @@ body{
     background: #ffe9ff;
 }
 .profile_parent_div{
-    width: 50%;
-    position: absolute;
-    top: 5vh;
+    width: 50vw;
     margin-left: -15%;
     display: flex;
     justify-content: space-between;
@@ -219,25 +240,29 @@ body{
     object-fit: cover;
     border: 5px solid #4d3a4d ;
     margin-right: 10%;
-    width: 20vh;
-    height: 20vh;
+    width: 10vw;
+    height: 10vw;
     border-radius: 100%;
 }
+.profile_nickname{
+    font-size: 35px;
+    font-weight: bold;
+}
 .profile_child_div{
-    width: 50%;
+    width: 60vw;
 }
 .post_counts{
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-    width: 400px;
-    font-size: 20px;
+    font-size: 25px;
     color: #4b4b4b;
 }
 .profile_btn_div{
     display: flex;
     justify-content: space-between;
-    width: 500px;
+    width: 100%;
+    align-items: center;
 }
 .profile_description{
     max-width: 300px;
@@ -246,7 +271,10 @@ body{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 45%;
+    max-height: 68vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+    width: 55%;
     margin-top: 1%;
     margin-left: -5%;
     border-top: 1px solid grey;
@@ -254,9 +282,10 @@ body{
 }
 .profile_post_image{
     object-fit: cover;    
-    width: 270px;
-    height: 270px;
+    width: 15vw;
+    height: 15vw;
     border-radius: 20px;
+    margin-bottom: 10%;
 }
 .post_detail {
     display: none;
@@ -270,21 +299,27 @@ body{
     background-color: rgba(0,0,0,0.5);
 }
 .post_detail_content {
+    width: 80%;
+    height: 70vh;
     background-color: #ffe9ff;
-    margin: 7.5% auto;
+    margin: 7% auto;
     padding: 30px;
     border-radius: 20px;
-    width: 70%;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     display: flex;
     justify-content: space-between;
 }
+.post_detail_right{
+    width: 90%;
+    margin-left: 1%;
+    max-width: 80vw;
+}
 .post_detail_message{
     background-color: #ffffff;
-    margin-left: 12.5%;
+    margin-left: 2%;
     padding: 30px;
     border-radius: 20px;
-    width: 70%;
+    width: 75%;
     display: flex;
     justify-content: space-between;
 }
@@ -463,8 +498,22 @@ body{
 Адаптація
 */
 @media  (max-width: 990px) {
+    .profile_child_div{
+        width: 65vw;
+    }
+    .profile_posts{
+        width: 80vw;
+    }
     .post{
         width: 80%;
+    }
+    .profile_post_image{
+        width: 25vw;
+        height: 25vw;
+    }
+    .post_detail_image{
+        margin: 0 auto;
+        width: 90%;
     }
     .send_comment_btn{
         font-size: 10px;
@@ -482,7 +531,7 @@ body{
         font-size: 13px;
     }
     .messeges_list{
-        top: 5vh;
+        top: 10vh;
     }
     .message_li{
         font-size: large;
@@ -495,8 +544,54 @@ body{
     .client_list_container{
         width: 80%;
     }
+    .post_detail_content{
+        margin-top: 1vh;
+        max-height: 99vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+    }
 }
 @media  (max-width: 1180px) {
+    .post_detail_content{
+        flex-direction: column;
+        height: auto;
+    }
+    .profile_btn{
+        font-size: 2vw;
+    }
+    .profile_nickname{
+        font-size: 3vw;
+    }
+    .post_counts{
+        font-size: 2vw;
+    }
+    .profile_parent_div{
+        width: 90%;
+        margin: 0 auto;
+        margin-top: 0px;
+        font-size: smaller;
+    }
+    .profile_posts{
+        width: 80vw;
+    }
+    .post{
+        width: 80%;
+    }
+    .profile_post_image{
+        width: 25vw;
+        height: 25vw;
+        max-width: 240px;
+        max-height: 240px;
+    }
+    .profile_photo{
+        width: 20vw;
+        height: 20vw;
+        margin: 0px;
+    }
+    .post_detail_image{
+        margin: 0 auto;
+        width: 90%;
+    }
     .con{
         flex-direction: column;
     }
@@ -505,8 +600,7 @@ body{
         max-height: 93vh;
     }
     .header{
-        position: fixed;
-        top: 93vh;
+        position: relative;
         width: 100%;
         padding-top: 0.5vh;
         max-height: 7vh;

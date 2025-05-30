@@ -24,7 +24,8 @@
                 <span>{{ post.created_by }} </span>
             </a>
                 <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
-                <form method="post" action="{% url 'posts:like_post' post.id %}">
+                <div id="like-block-{{ post.id }}">
+                <form method="post" action="{% url 'posts:like_post' post.id %}" class="ajax-like-form" data-post-id="{{ post.id }}">
                     {% csrf_token %}
                     <button class="like_button" type="submit">
                         {% if post.id in liked_posts %}
@@ -43,23 +44,28 @@
                     </button>
                     {{ post.like_count }} вподобайок
                 </form>
+                </div>
                 {% if post.description %}
                     <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
                 {% endif %}
+ 
+
                 <details class="comments">
-                    <summary>Коментарі {{ post.comment_count }}</summary>
-                    <div class="comments_div">
-                        {% for comment in comments %}
-                            {% if comment.post == post %}
-                                <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                    <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
-                        {% csrf_token %}
-                        {{ form.text }} 
-                        <button type="submit" class="btn-my send_comment_btn">Надіслати</button> 
-                    </form>
+                <summary>Коментарі {{ post.comment_count }}</summary>
+                <div class="comments_div" id="comments-{{ post.id }}">
+                    {% for comment in comments %}
+                    {% if comment.post == post %}
+                        <p class="post_description"><b>{{ comment.created_by }}:</b> {{ comment.text }}</p>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+
+                <form action="{% url 'posts:send_comment' post.pk %}" method="post"
+                        class="ajax-comment-form" data-post-id="{{ post.id }}">
+                    {% csrf_token %}
+                    {{ form.text }}
+                    <button type="submit" class="btn-my send_comment_btn">Надіслати</button>
+                </form>
                 </details>
                 
                 <hr width="100%">
@@ -70,4 +76,59 @@
     {% else %}
         <h1 style="font-size: 50px;">Ще немає постів</h1>
     {% endif %}
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    // AJAX for like form
+    document.addEventListener('submit', function (e) {
+        const form = e.target;
+        if (form.classList.contains('ajax-like-form')) {
+            e.preventDefault();
+            const postId = form.dataset.postId;
+
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                const block = document.querySelector(`#like-block-${postId}`);
+                if (block) {
+                    block.innerHTML = html;
+                }
+            })
+            .catch(error => console.error('AJAX помилка лайка:', error));
+        }
+    });
+
+    // AJAX for comment form
+    document.querySelectorAll('.ajax-comment-form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const postId = this.dataset.postId;
+
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                }
+            })
+            .then(res => res.text())
+            .then(html => {
+                const commentsDiv = document.querySelector(`#comments-${postId}`);
+                commentsDiv.innerHTML = html;
+                this.reset();
+            })
+            .catch(error => console.error('AJAX помилка коментаря:', error));
+        });
+    });
+});
+</script>
+        
+
 {% endblock content %}

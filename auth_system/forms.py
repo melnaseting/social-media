@@ -19,7 +19,7 @@ class ClientRegistrationForm(UserCreationForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Повторіть пароль'}))
     class Meta:
         model = models.Client
-        fields = ['username', 'email', 'password', 'password2']
+        fields = ['username', 'email', 'password1', 'password2']
         widgets = {
             'email' : forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Пошта'}),
             'username' : forms.TextInput(attrs={'class': 'form-control', 'placeholder': "Ім'я"}),
