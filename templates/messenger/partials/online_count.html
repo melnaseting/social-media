@@ -1,0 +1,43 @@
+<span id="online-count" hx-swab-oob="outerHTML" class="fade-in-scale pr-1">
+    {{ online_count }}
+    <style>
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(4); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .fade-in-scale {
+            animation: fadeInScale 0.6s ease;
+        }
+        </style> 
+</span>
+{% if online_count %}
+<div id="online-icon" class="absolute left-9 top-9 rounded-full bg-green-500 p-1.5" style="background-color: rgb(48, 135, 112);" ></div>
+{% else %}
+<div id="online-icon" class="absolute left-9 top-9 rounded-full bg-grey-500 p-1.5" style="background-color: rgb(179, 179, 179);"></div>
+{% endif %}
+
+<ul id="groupchat-members" class="list-group" style="margin: 10px;">            
+    {% for member in chat_group.members.all %}
+    <a class="list-group-item list-group-item-action d-flex"
+    href="{% url 'auth_system:account' member.id %}"
+    style="display: flex; justify-content: space-between; background: transparent; border: none; 
+           {% if member == chat_group.admin %}
+           color: lightcoral; font-weight: bold;
+           {% else %}
+               color: white;
+           {% endif %}
+           align-items: center;">
+ 
+            <div class="d-flex" style="align-items: center;">
+                <div class="relative">
+                    {% if member in chat_group.client_online.all %}
+                    <div id="online-icon" class="absolute left-9 top-9 rounded-full bg-green-500 p-1.5" style="background-color: rgb(32, 205, 159);" ></div>
+                    {% else %}
+                    <div id="online-icon" class="absolute left-9 top-9 rounded-full bg-grey-500 p-1.5" style="background-color: rgb(179, 179, 179);"></div>
+                    {% endif %}
+                    <img class="profile_photo_small" src="{{ member.photo.url }}" alt="">
+                </div>
+                {{ member.username }}</div>
+        </a>
+    {% endfor %}
+</ul>

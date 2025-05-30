@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import  Q
 from django.contrib.auth import logout, login, authenticate
 from django.urls import reverse,reverse_lazy
 from django.contrib import messages
@@ -47,26 +48,23 @@ class ClientLoginView(View):
         message = 'Login failed!'
         return render(request, self.template_name, context={'form': form, 'message': message})
 
-    
-
     def form_valid(self, form):
         messages.success(self.request, f"Вітаємо, {form.get_user().username}!")
         return super().form_valid(form)
 
-class ClientListView(ListView):
+class ClientListView(LoginRequiredMixin,ListView):
     model = models.Client
     template_name = 'auth_system/client_list'
     context_object_name = 'clients'
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().exclude(username='adding_message')
 
         username = self.request.GET.get("username","")
         if username:
             queryset = queryset.filter(username__icontains=username)
         
         return queryset
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +99,7 @@ class ClientProfileView(DetailView):
 
         context['posts'] = Post.objects.filter(
             created_by = client
-        )
+        ).order_by("-created_time")
 
         context['comments'] = Comment.objects.all()
         context["form"] = CreateCommentForm()
@@ -144,6 +142,51 @@ class FolowUser(LoginRequiredMixin,CreateView):
                     category = 'folowed_user'
                 )
         return redirect('auth_system:account', client.id) 
+
+class SubscribersListView(LoginRequiredMixin,ListView):
+    model = models.Client
+    template_name = 'auth_system/subscribers_list.html'
+    context_object_name = 'subscribers'
+
+    def get_queryset(self):
+        user_id = self.kwargs.get('pk')
+        subscribers_qs = models.Subscription.objects.filter(subscribed_to__id=user_id)
+        queryset = models.Client.objects.filter(id__in=subscribers_qs.values_list('subscriber_id', flat=True))
+
+        username = self.request.GET.get("username","")
+        if username:
+            queryset = queryset.filter(username__icontains=username)
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ClientFilterForm(self.request.GET)
+        context["client_id"] = self.kwargs.get('pk')
+        return context
+    
+class SubscribtionsListView(LoginRequiredMixin,ListView):
+    model = models.Client
+    template_name = 'auth_system/subscribtions_list.html'
+    context_object_name = 'subscribtions'
+
+    def get_queryset(self):
+        user = get_object_or_404(models.Client, id=self.kwargs.get('pk'))
+        subscriptions_qs = models.Subscription.objects.filter(subscriber=user)
+        queryset = models.Client.objects.filter(
+        id__in=subscriptions_qs.values_list('subscribed_to_id', flat=True)
+    )
+        username = self.request.GET.get("username","")
+        if username:
+            queryset = queryset.filter(username__icontains=username)
+        
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["form"] = ClientFilterForm(self.request.GET)
+        context["client_id"] = self.kwargs.get('pk')
+        return context
 
 class MessageListView(LoginRequiredMixin, ListView):
     model = models.Message

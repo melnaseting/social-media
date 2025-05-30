@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Нова група
+{% endblock title %}
+
+{% block content %} 
+
+<div class="card" style="width: 30%;">
+    <h1 style="font-size: 35px;margin: 10px 10px 25px 10px">Нова Група</h1>
+
+    <form method="post" class="d-flex w-full" style="justify-content: space-between;">
+        {% csrf_token %}
+        {{ form.groupchat_name }}
+        <button class="a-my-primary" style="margin-left: 5%;" type="submit">Створити</button>
+    </form>
+</div>
+
+{% endblock %}

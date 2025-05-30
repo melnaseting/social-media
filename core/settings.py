@@ -26,20 +26,25 @@ SECRET_KEY = 'django-insecure-qnpzw+gh7@lh_u$9q2*pynp8yndt@*_s$q+w6@@l+7y(bgz36b
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
 
 AUTH_USER_MODEL = "auth_system.Client"
 
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+    "daphne",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_htmx',
     'auth_system',
+    'messenger',
     'posts',
 ]
 
@@ -51,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -124,11 +130,20 @@ STATICFILES_DIRS = [
 print(STATICFILES_DIRS)
 LOGIN_URL = '/login/'
 
-CSRF_TRUSTED_ORIGINS=[
-    'https://f9b9-95-158-48-175.ngrok-free.app'
+CSRF_TRUSTED_ORIGINS = [
+    'https://5901-176-116-87-2.ngrok-free.app',
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+#WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = 'core.asgi.application'
+
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

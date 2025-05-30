@@ -4,24 +4,30 @@
     Повідомлення
 {% endblock title %}    
 {% block content %}
-<form method="post" action="{% url 'auth_system:delete_messages' %}">
-    {% csrf_token %}
-    <button type="submit">Видалити всі повідомлення для цього користувача</button>
-</form>
-
-<ol class="list-group list-group-flush" style="background: transparent;width: 50%;">
-    {% for message in messages  %}
-    <a href="{% if message.category == 'folowed_user' %}
-        {% url 'auth_system:account' message.message_from.id %}
+{% if messages %}
+<div class="messeges_list">
+    <form method="post" action="{% url 'auth_system:delete_messages' %}" class="messege_delete_form">
+        {% csrf_token %}
+        <button  type="submit" class="btn-my">Відчистити повідомлення</button>
+    </form>
+    
+    <ol class="list-group message_ol">
+        {% for message in messages  %}
+        <a href="{% if message.category == 'folowed_user' %}
+            {% url 'auth_system:account' message.message_from.id %}
+        {% else %}
+        {% url 'posts:post_detail' message.post.id %}
+        {% endif %}" style="text-decoration: none;">
+            <li class="message_li">
+                {{ message.text }}
+            <div><span class="badge text-bg-primary rounded-pill"> {{ message.created_time }} </span></div>
+          </li>
+        </a>
+        {% endfor %}
+    </ol>
     {% else %}
-    {% url 'posts:post_detail' message.post.id %}
-    {% endif %}" style="text-decoration: none;color:#4d3a4d">
-        <li class="message_li">
-            {{ message.text }}
-        <span class="badge text-bg-primary rounded-pill"> {{ message.created_time }} </span>
-      </li>
-    </a>
-    {% endfor %}
-</ol>
+    <h1 style="color: #5f5f5f; font-size: 50px;">У вас немає повідомлень</h1>
+    {% endif %}
+</div>
     
 {% endblock content %}

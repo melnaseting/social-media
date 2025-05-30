@@ -16,7 +16,7 @@
     </ul>
 {% endif %}
 <div class="post_detail_message">
-    <img class="post_image" src="{{ post.photo.url }}" alt="Фото">
+    <img class="post_detail_image" src="{{ post.photo.url }}" alt="Фото">
     <div class="post_detail_right">
         <a class="profile_link" href="{% url 'auth_system:account' post.created_by.id %}"> {{ post.created_by }} </a>
         {% if user == post.created_by %}
@@ -29,43 +29,100 @@
                 </a>               
             </div>
         {% endif %} 
-        <form method="post" action="{% url 'posts:like_post' post.id %}">
-            {% csrf_token %}
-            <button class="like_button" type="submit">
-                {% if post.id in liked_posts %}
-                <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="1.6">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
-                    <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ff0000"></path> </g>
-                </svg>
-                {% else %}
-                <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.6">
-                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
-                    <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ffffff"></path> </g>
-                </svg>
-                {% endif %}
-            </button>
-            {{ post.like_count }} вподобайок
-        </form>
+        <div id="like-block-{{ post.id }}">
+            <form method="post" action="{% url 'posts:like_post' post.id %}" class="ajax-like-form" data-post-id="{{ post.id }}">
+                {% csrf_token %}
+                <button class="like_button" type="submit">
+                    {% if post.id in liked_posts %}
+                    <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ff0000" stroke-width="1.6">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                        <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ff0000"></path> </g>
+                    </svg>
+                    {% else %}
+                    <svg width="20px" height="20px" viewBox="-1.12 -1.12 18.24 18.24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="1.6">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.032"></g>
+                        <g id="SVGRepo_iconCarrier"> <path d="M1.24264 8.24264L8 15L14.7574 8.24264C15.553 7.44699 16 6.36786 16 5.24264V5.05234C16 2.8143 14.1857 1 11.9477 1C10.7166 1 9.55233 1.55959 8.78331 2.52086L8 3.5L7.21669 2.52086C6.44767 1.55959 5.28338 1 4.05234 1C1.8143 1 0 2.8143 0 5.05234V5.24264C0 6.36786 0.44699 7.44699 1.24264 8.24264Z" fill="#ffffff"></path> </g>
+                    </svg>
+                    {% endif %}
+                </button>
+                {{ post.like_count }} вподобайок
+            </form>
+            </div>
         {% if post.description %}
             <p class="post_description"><b>{{ post.created_by }}: </b>{{ post.description }}</p>
         {% endif %}
         <details class="comments">
             <summary>Коментарі {{ post.comment_count }}</summary>
-            <div class="comments_div">
+            <div class="comments_div" id="comments-{{ post.id }}">
                 {% for comment in comments %}
-                    {% if comment.post == post %}
-                        <p class="post_description"><b>{{ comment.created_by }}: </b>{{ comment.text }}</p>
-                    {% endif %}
+                {% if comment.post == post %}
+                    <p class="post_description"><b>{{ comment.created_by }}:</b> {{ comment.text }}</p>
+                {% endif %}
                 {% endfor %}
             </div>
-            <form action="{% url 'posts:send_comment' post.pk %}" method="post" class="comment_form"> 
+            <form action="{% url 'posts:send_comment' post.pk %}" method="post"
+                class="ajax-comment-form" data-post-id="{{ post.id }}">
                 {% csrf_token %}
-                {{ form.text }} 
-                <button type="submit" class="btn-my">Надіслати</button> 
+                {{ form.text }}
+                <button type="submit" class="btn-my send_comment_btn">Надіслати</button>
             </form>
-        </details>   
+        </details>  
     </div>        
 </div>
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // AJAX for like form
+        document.addEventListener('submit', function (e) {
+            const form = e.target;
+            if (form.classList.contains('ajax-like-form')) {
+                e.preventDefault();
+                const postId = form.dataset.postId;
+    
+                fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    const block = document.querySelector(`#like-block-${postId}`);
+                    if (block) {
+                        block.innerHTML = html;
+                    }
+                })
+                .catch(error => console.error('AJAX помилка лайка:', error));
+            }
+        });
+    
+        // AJAX for comment form
+        document.querySelectorAll('.ajax-comment-form').forEach(form => {
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const postId = this.dataset.postId;
+    
+                fetch(this.action, {
+                    method: 'POST',
+                    body: new FormData(this),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                    }
+                })
+                .then(res => res.text())
+                .then(html => {
+                    const commentsDiv = document.querySelector(`#comments-${postId}`);
+                    commentsDiv.innerHTML = html;
+                    this.reset();
+                })
+                .catch(error => console.error('AJAX помилка коментаря:', error));
+            });
+        });
+    });
+</script>
+
 {% endblock content %}
+    

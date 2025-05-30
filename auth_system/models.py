@@ -24,6 +24,15 @@ class Client(AbstractUser):
     
     def has_unread_messages(self):
         return Message.objects.filter(message_to = self, read = False)
+    
+    def save(self, *args, **kwargs):
+        is_new = self.pk is None  # Сохраняем флаг: пользователь новый?
+        super().save(*args, **kwargs)
+
+        if is_new:
+            from messenger.models import ChatGroup  # Импорт внутри метода, чтобы избежать циклов
+            group, created = ChatGroup.objects.get_or_create(group_name='public-chat')
+            group.members.add(self)
 
 class Subscription(models.Model):
     subscriber = models.ForeignKey(
