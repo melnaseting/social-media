@@ -1,3 +1,4 @@
+{% if user.is_authenticated %}
 <form method="post" action="{% url 'posts:like_post' post.id %}" class="ajax-like-form" data-post-id="{{ post.id }}">
     {% csrf_token %}
     <button class="like_button" type="submit">
@@ -17,3 +18,4 @@
     </button>
     {{ post.like_count }} вподобайок
 </form>
+{% endif %}

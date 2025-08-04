@@ -131,7 +131,7 @@ print(STATICFILES_DIRS)
 LOGIN_URL = '/login/'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://5901-176-116-87-2.ngrok-free.app',
+    'https://bf2791acdd34.ngrok-free.app',
 ]
 
 #WSGI_APPLICATION = 'core.wsgi.application'
